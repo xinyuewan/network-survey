@@ -1,0 +1,293 @@
+<resources>
+
+    <attr name="cardStyle" format="reference" />
+
+    <!-- Base application theme. -->
+    <style name="NetworkSurveyTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/md_theme_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_secondary
+        </item> <!-- PreferenceCategory Font Color -->
+        <item name="colorOnSecondary">@color/md_theme_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_error</item>
+        <item name="colorOnError">@color/md_theme_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_background</item>
+        <item name="colorOnBackground">@color/md_theme_onBackground</item>
+        <item name="colorSurface">@color/md_theme_surface</item>
+        <item name="colorOnSurface">@color/md_theme_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_outlineVariant</item>
+        <item name="colorSurfaceInverse">@color/md_theme_inverseSurface</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_inverseOnSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_inversePrimary</item>
+        <item name="colorPrimaryFixed">@color/md_theme_primaryFixed</item>
+        <item name="colorOnPrimaryFixed">@color/md_theme_onPrimaryFixed</item>
+        <item name="colorPrimaryFixedDim">@color/md_theme_primaryFixedDim</item>
+        <item name="colorOnPrimaryFixedVariant">@color/md_theme_onPrimaryFixedVariant</item>
+        <item name="colorSecondaryFixed">@color/md_theme_secondaryFixed</item>
+        <item name="colorOnSecondaryFixed">@color/md_theme_onSecondaryFixed</item>
+        <item name="colorSecondaryFixedDim">@color/md_theme_secondaryFixedDim</item>
+        <item name="colorOnSecondaryFixedVariant">@color/md_theme_onSecondaryFixedVariant</item>
+        <item name="colorTertiaryFixed">@color/md_theme_tertiaryFixed</item>
+        <item name="colorOnTertiaryFixed">@color/md_theme_onTertiaryFixed</item>
+        <item name="colorTertiaryFixedDim">@color/md_theme_tertiaryFixedDim</item>
+        <item name="colorOnTertiaryFixedVariant">@color/md_theme_onTertiaryFixedVariant</item>
+        <item name="colorSurfaceDim">@color/md_theme_surfaceDim</item>
+        <item name="colorSurfaceBright">@color/md_theme_surfaceBright</item>
+        <item name="colorSurfaceContainerLowest">@color/md_theme_surfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/md_theme_surfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/md_theme_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:colorBackgroundFloating">@color/md_theme_surfaceContainer</item>
+        <item name="cardStyle">@style/CardViewTheme</item>
+    </style>
+
+    <style name="NetworkSurveyThemeOld" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:colorBackgroundFloating">@color/colorCardDark</item>
+        <item name="cardStyle">@style/CardViewTheme</item>
+    </style>
+
+    <style name="CardViewTheme" parent="CardView.Dark">
+        <item name="cardBackgroundColor">@color/md_theme_cardBackground</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_margin">@dimen/small_margin</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="contentPadding">3dp</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.Material3.Button.ElevatedButton">
+        <item name="android:textColor">@color/md_theme_onPrimaryContainer</item>
+        <item name="backgroundTint">@color/md_theme_primaryContainer</item>
+    </style>
+
+    <style name="BottomNavigationTheme" parent="NetworkSurveyTheme">
+        <item name="colorPrimary">@color/activeTabColor</item>
+        <item name="android:textColorSecondary">@color/inactiveTabColor</item>
+    </style>
+
+    <style name="NetworkSurveyTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
+
+    <style name="AlertDialogStyle" parent="@style/MaterialAlertDialog.Material3">
+        <item name="android:background">@color/md_theme_inverseOnSurface</item>
+    </style>
+
+    <style name="ConnectionSwitchStyle">
+        <item name="colorControlActivated">@color/colorCardDark</item>
+    </style>
+
+    <style name="CellularTitleText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">22sp</item>
+        <item name="android:autoSizeMaxTextSize">22sp</item>
+        <item name="android:autoSizeMinTextSize">12sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="CellularOverrideTitleText" parent="CellularTitleText">
+        <item name="android:maxLines">1</item>
+        <item name="android:autoSizeMaxTextSize">22sp</item>
+        <item name="android:autoSizeMinTextSize">8sp</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeStepGranularity">2sp</item>
+        <item name="android:textColor">@color/rssi_orange</item>
+    </style>
+
+    <style name="TitleText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/normalText</item>
+    </style>
+
+    <style name="SmallTitleText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/normalText</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TwoLineButtonText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+        <item name="android:autoSizeMaxTextSize">16sp</item>
+        <item name="android:autoSizeMinTextSize">8sp</item>
+        <item name="android:minLines">2</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeStepGranularity">2sp</item>
+        <item name="android:textColor">@color/normalText</item>
+    </style>
+
+    <style name="StatusText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="StandardText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+        <item name="android:autoSizeMaxTextSize">16sp</item>
+        <item name="android:autoSizeMinTextSize">6sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeStepGranularity">2sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/normalText</item>
+        <item name="android:layout_marginTop">@dimen/x_small_margin</item>
+        <item name="android:layout_marginBottom">@dimen/x_small_margin</item>
+        <item name="android:layout_marginStart">@dimen/small_margin</item>
+        <item name="android:layout_marginEnd">@dimen/small_margin</item>
+    </style>
+
+    <style name="StandardText.Smaller" parent="StandardText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+    </style>
+
+    <style name="ColumnTitleText" parent="SmallLabelText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">3dip</item>
+    </style>
+
+    <style name="TableText" parent="StandardText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:autoSizeMaxTextSize">14sp</item>
+        <item name="android:autoSizeMinTextSize">2sp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="LabelText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#c2c1c1</item>
+    </style>
+
+    <style name="SmallStatusText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#c2c1c1</item>
+    </style>
+
+    <style name="BrighterSmallStatusText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/normalText</item>
+    </style>
+
+    <style name="DescriptionText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/normalText</item>
+    </style>
+
+    <style name="SmallLabelText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">12sp</item>
+        <item name="android:autoSizeMaxTextSize">12sp</item>
+        <item name="android:autoSizeMinTextSize">6sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeStepGranularity">2sp</item>
+        <item name="android:textColor">@color/fadedText</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CardTitleStyle" parent="android:Widget.TextView">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#c2c1c1</item>
+    </style>
+
+    <style name="LabelStyle" parent="android:Widget.TextView">
+        <item name="android:layout_marginEnd">@dimen/label_value_margin</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="ValueText" parent="TextAppearance.AppCompat">
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NetworkStatusText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ListTitleText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="ListLabelText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/md_theme_outline</item>
+    </style>
+
+    <style name="ListContentText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/normalText</item>
+    </style>
+
+    <!-- GNSS Status view -->
+    <style name="info_label">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/status_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingRight">4dip</item>
+    </style>
+
+    <style name="info_value">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/status_text_size</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- GNSS Sky view -->
+    <style name="sky_legend_label">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/sky_legend_text_size_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="sky_legend_value">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/sky_legend_text_size_small</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="cn0_avg_value_in_view">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:background">@drawable/cn0_round_corner_background_in_view</item>
+    </style>
+
+    <style name="cn0_avg_value_used" parent="cn0_avg_value_in_view">
+        <item name="android:background">@drawable/cn0_round_corner_background_used_dark</item>
+    </style>
+
+</resources>

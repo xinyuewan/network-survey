@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+/* 
+**
+** Copyright 2013, Sean J. Barbeau
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     https://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources>
+    <!-- Strings in this file should NOT be translated -->
+    <string name="app_name">Network Survey</string>
+
+    <!-- Values and units display - Status -->
+    <string name="lat_or_lon">%1$.7f\u00B0</string>
+    <string name="gps_lat_dms_value">%1$s\t\u2007%2$02d\u00B0 %3$2d\' %4$05.2f\"</string>
+    <string name="gps_lon_dms_value">%1$s\t%2$03d\u00B0 %3$2d\' %4$05.2f\"</string>
+    <string name="gps_lat_ddm_value">%1$s\t\u2007%2$02d\u00B0 %3$06.3f</string>
+    <string name="gps_lon_ddm_value">%1$s\t%2$03d\u00B0 %3$06.3f</string>
+    <string name="gps_altitude_value_meters">%1$.1f m</string>
+    <string name="gps_altitude_msl_value_meters">%1$.1f m</string>
+    <string name="gps_accuracy_value_meters">%1$.1f m</string>
+    <string name="gps_hor_and_vert_accuracy_value_meters">%1$.1f/%2$.1f m</string>
+    <string name="gps_speed_value_kilometers_hour">%1$.1f km/h</string>
+    <string name="gps_speed_acc_value_km_hour">%1$.1f km/h</string>
+    <string name="gps_bearing_value">%1$.1f\u00B0</string>
+    <string name="gps_bearing_acc_value">%1$.1f\u00B0</string>
+    <string name="gps_num_sats_value">%1$d/%2$d/%3$d</string>
+    <string name="pdop_value">%1$.1f</string>
+    <string name="hvdop_value">%1$.1f/%2$.1f</string>
+    <string name="gps_elevation_column_value">%1$.1f\u00B0</string>
+    <string name="gps_azimuth_column_value">%1$.1f\u00B0</string>
+
+    <!-- Values and units display - Sky View -->
+    <string name="sky_legend_cn0_low">10</string>
+    <string name="sky_legend_cn0_low_middle">18</string>
+    <string name="sky_legend_cn0_middle">27</string>
+    <string name="sky_legend_cn0_middle_high">36</string>
+    <string name="sky_legend_cn0_high">45</string>
+    <string name="sky_legend_cn0_units">(dB-Hz)</string>
+
+    <!-- Values and units display - Accuracy View -->
+
+    <!-- RADAR intent used by apps like BenchMap to set the ground truth location in GPSTest -->
+
+    <!-- Geo URI for parsing location data from QR Codes -->
+
+    <!-- Preference keys -->
+    <string name="pref_key_default_sat_sort">preference_default_sat_sort</string>
+    <string name="pref_key_default_sat_filter">preference_default_sat_filter</string>
+
+    <string name="pref_key_gps_min_time">gps_min_time</string>
+    <string name="pref_key_gps_min_distance">gps_min_distance</string>
+
+    <string name="pref_key_true_north">true_north</string>
+
+    <string name="pref_key_language">preference_language</string>
+    <string name="pref_key_force_full_gnss_measurements">preference_force_full_gnss_measurements</string>
+
+    <string name="pref_key_ignore_raw_gnss_failure">ignore_raw_gnss_failure</string>
+
+    <!-- Default preference values -->
+
+    <!-- The constants in map_type_entries and below match those in GoogleMap object:
+    https://developers.google.com/maps/documentation/android/reference/com/google/android/gms/maps/GoogleMap -->
+
+    <!-- Send location URLs -->
+
+    <!-- Commands sent to the LocationManager -->
+
+    <!-- Device capabilities -->
+    <string name="capability_key_raw_measurements">capability_key_raw_measurements</string>
+    <string name="capability_key_nav_messages">capability_key_nav_messages</string>
+    <string name="capability_key_nmea">capability_key_nmea</string>
+    <string name="capability_key_measurement_automatic_gain_control">capability_key_measurement_automatic_gain_control</string>
+    <string name="capability_key_measurement_delta_range">capability_key_measurement_delta_range</string>
+    <string name="capability_key_num_antenna">capability_key_num_antenna</string>
+    <string name="capability_key_antenna_cf">capability_key_antenna_cf</string>
+
+    <!-- Unit preferences-->
+
+    <!-- Supported languages, must stay in-order with language_values -->
+
+    <!-- Supported languages, must stay in-order with language_entries -->
+    <string-array name="language_values">
+        <item>en</item>
+        <item>zh</item>
+        <item>cs</item>
+        <item>nl</item>
+        <item>de</item>
+        <item>el</item>
+        <item>it</item>
+        <item>ja</item>
+        <item>ru</item>
+        <item>es</item>
+        <item>in</item>
+        <item>pl</item>
+        <item>fr</item>
+    </string-array>
+
+
+    <!-- Coordinate formats -->
+
+    <string name="preferences_coordinate_format_dd_key">dd</string>
+</resources>

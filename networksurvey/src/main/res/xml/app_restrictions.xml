@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<restrictions xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <restriction
+        android:defaultValue="true"
+        android:description="@string/mqtt_start_on_boot_description"
+        android:key="mqtt_start_on_boot"
+        android:restrictionType="bool"
+        android:title="@string/mqtt_start_on_boot_title" />
+
+    <restriction
+        android:defaultValue=""
+        android:description="@string/mqtt_connection_host_description"
+        android:key="mqtt_connection_host"
+        android:restrictionType="string"
+        android:title="@string/mqtt_connection_host_title" />
+
+    <restriction
+        android:defaultValue="8883"
+        android:description="@string/mqtt_connection_port_description"
+        android:key="mqtt_connection_port"
+        android:restrictionType="integer"
+        android:title="@string/mqtt_connection_port_title" />
+
+    <restriction
+        android:defaultValue="true"
+        android:description="@string/mqtt_tls_enabled_description"
+        android:key="mqtt_tls_enabled"
+        android:restrictionType="bool"
+        android:title="@string/mqtt_tls_enabled_title" />
+
+    <restriction
+        android:defaultValue="%username%"
+        android:description="@string/mqtt_client_id_description"
+        android:key="mqtt_client_id"
+        android:restrictionType="string"
+        android:title="@string/mqtt_client_id_title" />
+
+    <restriction
+        android:defaultValue=""
+        android:description="@string/mqtt_device_name_description"
+        android:key="mqtt_device_name"
+        android:restrictionType="string"
+        android:title="@string/mqtt_device_name_title" />
+
+    <restriction
+        android:description="@string/mqtt_username_description"
+        android:key="mqtt_username"
+        android:restrictionType="string"
+        android:title="@string/mqtt_username_title" />
+
+    <restriction
+        android:description="@string/mqtt_password_description"
+        android:key="mqtt_password"
+        android:restrictionType="string"
+        android:title="@string/mqtt_password_title" />
+
+    <restriction
+        android:defaultValue="5"
+        android:description="@string/cellular_scan_interval_description"
+        android:key="cellular_scan_interval_seconds"
+        android:restrictionType="integer"
+        android:title="@string/cellular_scan_interval_title" />
+
+    <restriction
+        android:defaultValue="10"
+        android:description="@string/wifi_scan_interval_description"
+        android:key="wifi_scan_interval_seconds"
+        android:restrictionType="integer"
+        android:title="@string/wifi_scan_interval_title" />
+
+    <restriction
+        android:defaultValue="30"
+        android:description="@string/bluetooth_scan_interval_description"
+        android:key="bluetooth_scan_interval_seconds"
+        android:restrictionType="integer"
+        android:title="@string/bluetooth_scan_interval_title" />
+
+    <restriction
+        android:defaultValue="30"
+        android:description="@string/gnss_scan_interval_description"
+        android:key="gnss_scan_interval_seconds"
+        android:restrictionType="integer"
+        android:title="@string/gnss_scan_interval_title" />
+
+    <restriction
+        android:defaultValue="120"
+        android:description="@string/device_status_scan_interval_description"
+        android:key="device_status_scan_interval_seconds"
+        android:restrictionType="integer"
+        android:title="@string/device_status_scan_interval_title" />
+
+    <restriction
+        android:defaultValue="true"
+        android:description="@string/cellular_stream_description"
+        android:key="cellular_stream_enabled"
+        android:restrictionType="bool"
+        android:title="@string/cellular_stream_title" />
+
+    <restriction
+        android:defaultValue="true"
+        android:description="@string/wifi_stream_description"
+        android:key="wifi_stream_enabled"
+        android:restrictionType="bool"
+        android:title="@string/wifi_stream_title" />
+
+    <restriction
+        android:defaultValue="false"
+        android:description="@string/bluetooth_stream_description"
+        android:key="bluetooth_stream_enabled"
+        android:restrictionType="bool"
+        android:title="@string/bluetooth_stream_title" />
+
+    <restriction
+        android:defaultValue="false"
+        android:description="@string/gnss_stream_description"
+        android:key="gnss_stream_enabled"
+        android:restrictionType="bool"
+        android:title="@string/gnss_stream_title" />
+
+    <restriction
+        android:defaultValue="true"
+        android:description="@string/device_status_stream_description"
+        android:key="device_status_stream_enabled"
+        android:restrictionType="bool"
+        android:title="@string/device_status_stream_title" />
+
+    <restriction
+        android:description="@string/mqtt_topic_prefix_description"
+        android:key="mqtt_topic_prefix"
+        android:restrictionType="string"
+        android:title="@string/mqtt_topic_prefix_title" />
+
+    <restriction
+        android:defaultValue="10"
+        android:description="@string/log_rollover_description"
+        android:key="log_rollover_size_mb"
+        android:restrictionType="integer"
+        android:title="@string/log_rollover_title" />
+
+    <restriction
+        android:defaultValue="2"
+        android:description="@string/log_file_description"
+        android:key="log_file_type"
+        android:restrictionType="integer"
+        android:title="@string/log_file_title" />
+
+    <restriction
+        android:defaultValue="true"
+        android:description="@string/auto_start_cellular_logging_description"
+        android:key="auto_start_logging"
+        android:restrictionType="bool"
+        android:title="@string/auto_start_cellular_logging_title" />
+
+    <restriction
+        android:defaultValue="true"
+        android:description="@string/auto_start_wifi_logging_description"
+        android:key="auto_start_wifi_logging"
+        android:restrictionType="bool"
+        android:title="@string/auto_start_wifi_logging_title" />
+
+    <restriction
+        android:defaultValue="false"
+        android:description="@string/auto_start_bluetooth_logging_description"
+        android:key="auto_start_bluetooth_logging"
+        android:restrictionType="bool"
+        android:title="@string/auto_start_bluetooth_logging_title" />
+
+    <restriction
+        android:defaultValue="false"
+        android:description="@string/auto_start_gnss_logging_description"
+        android:key="auto_start_gnss_logging"
+        android:restrictionType="bool"
+        android:title="@string/auto_start_gnss_logging_title" />
+
+    <restriction
+        android:defaultValue="false"
+        android:description="@string/auto_start_cdr_logging_description"
+        android:key="auto_start_cdr_logging"
+        android:restrictionType="bool"
+        android:title="@string/auto_start_cdr_logging_title" />
+
+    <restriction
+        android:defaultValue="true"
+        android:description="@string/ignore_wifi_scan_throttling_warning_description"
+        android:key="ignore_wifi_scan_throttling_warning"
+        android:restrictionType="bool"
+        android:title="@string/ignore_wifi_scan_throttling_warning_title" />
+
+    <restriction
+        android:defaultValue="0"
+        android:description="@string/location_provider_mdm_description"
+        android:key="location_provider"
+        android:restrictionType="integer"
+        android:title="@string/location_provider_title" />
+
+    <restriction
+        android:defaultValue="true"
+        android:description="@string/allow_intent_control_description"
+        android:key="allow_intent_control"
+        android:restrictionType="bool"
+        android:title="@string/allow_intent_control_title" />
+
+    <restriction
+        android:defaultValue="false"
+        android:description="@string/allow_data_upload_mdm_description"
+        android:key="allow_external_data_upload"
+        android:restrictionType="bool"
+        android:title="@string/allow_data_upload" />
+
+    <restriction
+        android:defaultValue="0"
+        android:description="@string/battery_pause_mdm_description"
+        android:key="battery_threshold_percent"
+        android:restrictionType="integer"
+        android:title="@string/battery_pause_title" />
+
+</restrictions>

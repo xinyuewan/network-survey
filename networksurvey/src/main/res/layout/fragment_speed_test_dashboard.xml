@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <!-- 数据绑定变量（如果需要） -->
+    </data>
+
+    <!-- 新增父容器：将两个同级布局合并到一个根容器中 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- 服务小区信息卡片 -->
+        <LinearLayout
+            android:id="@+id/cellInfoCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/card_bg"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- 网络类型标签 -->
+            <TextView
+                android:id="@+id/cellType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LTE"
+                android:textColor="@color/primary"
+                android:textStyle="bold" />
+
+            <!-- 信号指标行 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/rsrpValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="RSRP: -- dBm" />
+
+            </LinearLayout>
+
+            <!-- 小区ID信息 -->
+            <TextView
+                android:id="@+id/cellIdInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Cell ID: --" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            tools:context=".fragments.SpeedTestFragment">
+
+
+            <!-- 状态文本 -->
+            <TextView
+                android:id="@+id/statusText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="准备就绪"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 网络类型文本 -->
+            <TextView
+                android:id="@+id/networkTypeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="网络类型: 未知"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/statusText" />
+
+            <!-- 下载速度区域 -->
+            <TextView
+                android:id="@+id/downloadLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="下载速度:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/networkTypeText" />
+
+            <TextView
+                android:id="@+id/downloadSpeedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="0 Mbps"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/downloadLabel"
+                app:layout_constraintLeft_toRightOf="@id/downloadLabel"
+                app:layout_constraintTop_toTopOf="@id/downloadLabel" />
+
+            <ProgressBar
+                android:id="@+id/downloadProgress"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="8dp"
+                android:progressDrawable="@drawable/progress_bar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/downloadLabel" />
+
+            <!-- 上传速度区域 -->
+            <TextView
+                android:id="@+id/uploadLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="上传速度:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/downloadProgress" />
+
+            <TextView
+                android:id="@+id/uploadSpeedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="0 Mbps"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/uploadLabel"
+                app:layout_constraintLeft_toRightOf="@id/uploadLabel"
+                app:layout_constraintTop_toTopOf="@id/uploadLabel" />
+
+            <ProgressBar
+                android:id="@+id/uploadProgress"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="8dp"
+                android:progressDrawable="@drawable/progress_bar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/uploadLabel" />
+
+            <!-- 时延区域 -->
+            <TextView
+                android:id="@+id/latencyLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="网络时延:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/uploadProgress" />
+
+            <TextView
+                android:id="@+id/latencyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="0 ms"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/latencyLabel"
+                app:layout_constraintLeft_toRightOf="@id/latencyLabel"
+                app:layout_constraintTop_toTopOf="@id/latencyLabel" />
+
+            <Button
+                android:id="@+id/startTestButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="开始测试"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/latencyLabel" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

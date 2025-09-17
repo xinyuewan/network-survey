@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2012, Sean J. Barbeau
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources>
+    <!-- Status -->
+    <string-array name="sort_sats">
+        <item>Constellation</item>
+        <item>Carrier Frequency</item>
+        <item>Signal Strength</item>
+        <item>Used in Fix</item>
+        <item>Constellation, Carrier Frequency</item>
+        <item>Constellation, Signal Strength</item>
+        <item>Constellation, Used in Fix</item>
+    </string-array>
+
+    <!-- Let the user choose between map views -->
+
+    <!-- Help -->
+
+    <!-- CAUTION!!! The values in this array need to stay in sync with the code from
+    com.craxiom.networksurvey.fragments.model.WifiViewModel.WifiRecordSortedListCallback -->
+    <string-array name="wifi_network_sort_options">
+        <item>Signal Strength</item>
+        <item>SSID</item>
+        <item>BSSID</item>
+        <item>Channel</item>
+        <item>Frequency</item>
+        <item>Security Type</item>
+    </string-array>
+
+    <!-- CAUTION!!! The values in this array need to stay in sync with the code from
+    com.craxiom.networksurvey.fragments.model.BluetoothViewModel.RecordSortedListCallback -->
+    <string-array name="bluetooth_sort_options">
+        <item>Signal Strength</item>
+        <item>Source Address</item>
+        <item>OTA Device Name</item>
+        <item>Supported Technologies</item>
+    </string-array>
+
+    <string-array name="log_rollover_size_labels">
+        <item>Never</item>
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>250</item>
+        <item>1000</item>
+    </string-array>
+
+    <string-array name="log_rollover_size_values">
+        <item>0</item>
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>250</item>
+        <item>1000</item>
+    </string-array>
+
+    <string-array name="log_file_option_labels">
+        <item>CSV</item>
+        <item>GeoPackage</item>
+        <item>CSV and GeoPackage</item>
+    </string-array>
+
+    <string-array name="log_file_option_index">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="location_provider_option_labels">
+        <item>FUSED</item>
+        <item>GNSS</item>
+        <item>NETWORK</item>
+        <item>ALL</item>
+    </string-array>
+
+    <string-array name="location_provider_option_index">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="coverage_circle_color_labels">
+        <item>Default (Blue)</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Orange</item>
+        <item>Purple</item>
+        <item>Yellow</item>
+        <item>Cyan</item>
+        <item>White</item>
+    </string-array>
+
+    <string-array name="coverage_circle_color_values">
+        <item>default</item>
+        <item>red</item>
+        <item>green</item>
+        <item>orange</item>
+        <item>purple</item>
+        <item>yellow</item>
+        <item>cyan</item>
+        <item>white</item>
+    </string-array>
+</resources>

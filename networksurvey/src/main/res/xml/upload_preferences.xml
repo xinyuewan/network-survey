@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        app:key="general_upload_settings"
+        app:title="@string/settings">
+
+        <SwitchPreferenceCompat
+            app:key="show_configuration_upload_dialog"
+            android:defaultValue="true"
+            app:title="@string/show_upload_dialog_pref_title"
+            app:summaryOff="@string/show_upload_dialog_summary_off"
+            app:summaryOn="@string/show_upload_dialog_summary_on" />
+
+        <SwitchPreferenceCompat
+            app:key="upload_retry_enabled"
+            app:title="重试失败的上传"
+            app:summary="上传失败时自动重试" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/ic_cell_tower"
+            app:key="new_tower_alerts_enabled"
+            app:title="@string/new_tower_alerts_title"
+            app:summaryOff="@string/new_tower_alerts_summary_off"
+            app:summaryOn="@string/new_tower_alerts_summary_on" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="ocid_settings"
+        app:title="OpenCelliD.org">
+
+        <SwitchPreferenceCompat
+            app:key="upload_to_opencellid"
+            android:defaultValue="true"
+            app:title="上传至 OpenCellID"
+            app:summary="启用后（且已启动“上传至数据库”调查），蜂窝网络调查记录将写入数据库并上传至 OpenCelliD" />
+
+        <SwitchPreferenceCompat
+            app:key="anonymous_opencellid_upload"
+            app:title="匿名贡献"
+            app:summaryOff="将使用 OpenCelliD 个人访问令牌"
+            app:summaryOn="将使用共享访问令牌" />
+
+        <EditTextPreference
+            app:key="ocid_api_key"
+            app:title="OpenCelliD 个人访问令牌"
+            app:summary="输入您的 OpenCelliD API 密钥"
+            app:useSimpleSummaryProvider="true"
+            app:dialogTitle="输入 OpenCellID API 密钥"
+            app:dialogMessage="留空则以匿名方式上传"
+            android:inputType="textPassword" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="beacondb_settings"
+        app:title="BeaconDB">
+
+        <SwitchPreferenceCompat
+            app:key="upload_to_beacondb"
+            android:defaultValue="true"
+            app:title="上传至 BeaconDB"
+            app:summary="启用后（且已启动“上传至数据库”调查），蜂窝网络和 Wi-Fi 调查记录将写入数据库并上传至 BeaconDB" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="data_upload_management"
+        app:title="数据管理">
+
+        <Preference
+            app:key="delete_all_data_in_upload_database"
+            app:title="删除所有待上传数据"
+            app:summary="从内部数据库中删除所有等待上传的数据" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

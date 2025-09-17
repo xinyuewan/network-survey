@@ -1,0 +1,14 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="cdr_optional_permissions_rationale">除了必需权限外，CDR 日志记录还有一些可选权限。
+        \n\n1. <b>访问通话记录</b>：需要此权限来获取电话号码并将其写入 CDR 日志文件。您可以拒绝此权限，CDR 日志记录仍可正常工作，但电话号码将不会被记录。
+        \n\n2. <b>读取短信</b>：如果您想将短信事件记录到 CDR 日志文件中，则需要此权限。您可以拒绝此权限，CDR 日志记录仍可正常工作，但短信事件将不会被记录。</string>
+
+    <string name="cdr_help">什么是 CDR？CDR 即通话详单记录，包含手机与蜂窝网络进行特定交互的事件。例如，电话呼叫、短信消息以及某些基站切换。网络调查应用具有 CDR 文件日志记录功能，可将 CDR 事件记录到 CSV 文件中。
+        记录 CDR 有多种可能的用例；例如，可以记录您的手机在做什么、正在与哪些基站通信。
+        \n\n值得注意的是，获取 CDR 信息需要额外的 Android 权限。读取短信就是其中一项权限。需要明确的是，网络调查应用不会获取您的短信内容并将其发送到某个服务器。相反，此应用对您的短信所做的唯一操作就是将短信事件记录到 CDR CSV 文件中。
+        \n\n最后需要说明的是，目前 CDR 支持短信，但不支持彩信。因此，群组聊天相关的消息不会显示在 CDR CSV 文件中。</string>
+
+    <string name="version_suffix" translatable="false">-cdr</string>
+
+</resources>

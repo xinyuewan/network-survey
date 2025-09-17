@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/network_details_scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/fragment_padding_top"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.craxiom.networksurvey.NetworkSurveyActivity">
+
+    <LinearLayout
+        android:id="@+id/network_details_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="3dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/technology_card_view"
+            style="?attr/cardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingBottom="6dp"
+                    android:baselineAligned="false">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/carrier_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/current_carrier"
+                            style="@style/CellularTitleText"
+                            android:textColor="@color/fadedText"
+                            android:maxLines="1"
+                            android:autoSizeMaxTextSize="22sp"
+                            android:autoSizeStepGranularity="2sp"
+                            android:autoSizeTextType="uniform"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            app:layout_constraintTop_toTopOf="@id/carrier_group"
+                            app:layout_constraintBottom_toTopOf="@id/current_carrier_label"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/current_carrier_label"
+                            style="@style/SmallLabelText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/carrier_label"
+                            app:layout_constraintBottom_toBottomOf="@id/carrier_group" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/voice_network_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/current_voice_network"
+                                style="@style/CellularTitleText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                app:layout_constraintTop_toTopOf="@id/voice_network_group"
+                                app:layout_constraintBottom_toTopOf="@id/current_voice_network_label"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/current_voice_network_label"
+                                style="@style/SmallLabelText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/voice_network_label"
+                                app:layout_constraintBottom_toBottomOf="@id/voice_network_group" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/data_network_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/current_data_network"
+                                style="@style/CellularTitleText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                app:layout_constraintTop_toTopOf="@id/data_network_group"
+                                app:layout_constraintBottom_toTopOf="@id/current_data_network_label"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/current_data_network_label"
+                                style="@style/SmallLabelText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/data_network_label"
+                                app:layout_constraintBottom_toBottomOf="@id/data_network_group" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/override_network_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/current_override_network"
+                                style="@style/CellularOverrideTitleText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                app:layout_constraintTop_toTopOf="@id/override_network_group"
+                                app:layout_constraintBottom_toTopOf="@id/current_override_network_label"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/current_override_network_label"
+                                style="@style/SmallLabelText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/override_network_label"
+                                app:layout_constraintBottom_toBottomOf="@id/override_network_group" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Airplane Mode Message - shown when airplane mode is active -->
+                <LinearLayout
+                    android:id="@+id/airplane_mode_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="@string/airplane_mode_active"
+                        android:src="@drawable/ic_airplanemode_active_24"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/airplane_mode_ui_message"
+                        android:textColor="@color/rssi_orange"
+                        android:textSize="16sp"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <include
+            layout="@layout/location_card"
+            android:id="@+id/location_card" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cellular_details_card_view"
+            style="?attr/cardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            card_view:contentPadding="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/card_title"
+                    android:padding="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/cellular_tower_icon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:contentDescription="@string/cellular_icon_description"
+                        android:src="@drawable/ic_cellular" />
+
+                    <TextView
+                        android:id="@+id/cellular_details_title"
+                        style="@style/CardTitleStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/card_title_cellular_details_initial" />
+
+                    <ImageView
+                        android:id="@+id/cellular_info_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/x_small_margin"
+                        android:layout_marginEnd="@dimen/x_small_margin"
+                        android:contentDescription="@string/cellular_info_description"
+                        android:src="@drawable/ic_info" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/xx_small_margin"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/plmn_group"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/plmn"
+                            style="@style/StandardText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            app:layout_constraintTop_toTopOf="@id/plmn_group"
+                            app:layout_constraintBottom_toTopOf="@id/plmn_label"
+                            android:textIsSelectable="true"
+                            tools:layout_editor_absoluteX="8dp" />
+
+                        <TextView
+                            android:id="@+id/plmn_label"
+                            style="@style/SmallLabelText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/mcc_mnc_label"
+                            app:layout_constraintBottom_toBottomOf="@id/plmn_group" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/tac_group"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tac"
+                            style="@style/StandardText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            app:layout_constraintTop_toTopOf="@id/tac_group"
+                            app:layout_constraintBottom_toTopOf="@id/tac_label"
+                            android:textIsSelectable="true"
+                            tools:layout_editor_absoluteX="8dp" />
+
+                        <TextView
+                            android:id="@+id/tac_label"
+                            style="@style/SmallLabelText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/tac_label"
+                            app:layout_constraintBottom_toBottomOf="@id/tac_group" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cid_group"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/cid"
+                            style="@style/StandardText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            app:layout_constraintTop_toTopOf="@id/cid_group"
+                            app:layout_constraintBottom_toTopOf="@id/cid_label"
+                            android:textIsSelectable="true"
+                            tools:layout_editor_absoluteX="8dp" />
+
+                        <TextView
+                            android:id="@+id/cid_label"
+                            style="@style/SmallLabelText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/cid_label"
+                            app:layout_constraintBottom_toBottomOf="@id/cid_group" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".7"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:baselineAligned="false">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/enb_id_group"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/small_margin"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/enb_id"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="@id/enb_id_group"
+                                    app:layout_constraintBottom_toTopOf="@id/enb_id_label"
+                                    android:textIsSelectable="true"
+                                    tools:layout_editor_absoluteX="8dp" />
+
+                                <TextView
+                                    android:id="@+id/enb_id_label"
+                                    style="@style/SmallLabelText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/enb_id_label"
+                                    app:layout_constraintBottom_toBottomOf="@id/enb_id_group" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/sector_id_group"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/small_margin"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/sector_id"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="@id/sector_id_group"
+                                    app:layout_constraintBottom_toTopOf="@id/sector_id_label"
+                                    android:textIsSelectable="true"
+                                    tools:layout_editor_absoluteX="8dp" />
+
+                                <TextView
+                                    android:id="@+id/sector_id_label"
+                                    style="@style/SmallLabelText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sector_id_label"
+                                    app:layout_constraintBottom_toBottomOf="@id/sector_id_group" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:baselineAligned="false">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/earfcn_group"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/small_margin"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/earfcn"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="@id/earfcn_group"
+                                    app:layout_constraintBottom_toTopOf="@id/earfcn_label"
+                                    android:textIsSelectable="true"
+                                    tools:layout_editor_absoluteX="8dp" />
+
+                                <TextView
+                                    android:id="@+id/earfcn_label"
+                                    style="@style/SmallLabelText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/earfcn_label"
+                                    app:layout_constraintBottom_toBottomOf="@id/earfcn_group" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/pci_group"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/small_margin"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/pci"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="@id/pci_group"
+                                    app:layout_constraintBottom_toTopOf="@id/pci_label"
+                                    android:textIsSelectable="true"
+                                    tools:layout_editor_absoluteX="8dp" />
+
+                                <TextView
+                                    android:id="@+id/pci_label"
+                                    style="@style/SmallLabelText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/pci_label"
+                                    app:layout_constraintBottom_toBottomOf="@id/pci_group" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/frequency_row"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:baselineAligned="false"
+                            android:visibility="gone">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/band_group"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/small_margin"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/band"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="@id/band_group"
+                                    app:layout_constraintBottom_toTopOf="@id/band_label"
+                                    android:textIsSelectable="true"
+                                    tools:layout_editor_absoluteX="8dp" />
+
+                                <TextView
+                                    android:id="@+id/band_label"
+                                    style="@style/SmallLabelText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/band_label"
+                                    app:layout_constraintBottom_toBottomOf="@id/band_group" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <!-- The frequency_group is currently only for 5G NR -->
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/frequency_group"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/small_margin"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/frequency"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="@id/frequency_group"
+                                    app:layout_constraintBottom_toTopOf="@id/frequency_label"
+                                    android:textIsSelectable="true"
+                                    tools:layout_editor_absoluteX="8dp" />
+
+                                <TextView
+                                    android:id="@+id/frequency_label"
+                                    style="@style/SmallLabelText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/frequency_label"
+                                    app:layout_constraintBottom_toBottomOf="@id/frequency_group" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+
+                        <!-- lte_band_row is only for LTE -->
+                        <LinearLayout
+                            android:id="@+id/lte_band_row"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:baselineAligned="false">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/lte_band_group"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/small_margin"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/lte_band"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="@id/lte_band_group"
+                                    app:layout_constraintBottom_toTopOf="@id/lte_band_label"
+                                    android:textIsSelectable="true"
+                                    tools:layout_editor_absoluteX="8dp" />
+
+                                <TextView
+                                    android:id="@+id/lte_band_label"
+                                    style="@style/SmallLabelText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/band_label"
+                                    app:layout_constraintBottom_toBottomOf="@id/lte_band_group" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/bandwidth_group"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/small_margin"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/bandwidth"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="@id/bandwidth_group"
+                                    app:layout_constraintBottom_toTopOf="@id/bandwidth_label"
+                                    android:textIsSelectable="true"
+                                    tools:layout_editor_absoluteX="8dp" />
+
+                                <TextView
+                                    android:id="@+id/bandwidth_label"
+                                    style="@style/SmallLabelText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/bandwidth_label"
+                                    app:layout_constraintBottom_toBottomOf="@id/bandwidth_group" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:baselineAligned="false">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/cqi_group"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/small_margin"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/cqi"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="@id/cqi_group"
+                                    app:layout_constraintBottom_toTopOf="@id/cqi_label"
+                                    android:textIsSelectable="true"
+                                    tools:layout_editor_absoluteX="8dp" />
+
+                                <TextView
+                                    android:id="@+id/cqi_label"
+                                    style="@style/SmallLabelText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/cqi_label"
+                                    app:layout_constraintBottom_toBottomOf="@id/cqi_group" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/ta_group"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/small_margin"
+                                android:layout_marginBottom="@dimen/small_margin"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/ta"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="@id/ta_group"
+                                    app:layout_constraintBottom_toTopOf="@id/ta_label"
+                                    android:textIsSelectable="true"
+                                    tools:layout_editor_absoluteX="8dp" />
+
+                                <TextView
+                                    android:id="@+id/ta_label"
+                                    style="@style/SmallLabelText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/ta_label"
+                                    app:layout_constraintBottom_toBottomOf="@id/ta_group" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight=".30"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginEnd="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/medium_margin"
+                        android:layout_marginBottom="@dimen/medium_margin"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/signal_one_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end">
+
+                            <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                                android:id="@+id/progress_bar_signal_one"
+                                android:layout_width="match_parent"
+                                android:layout_height="32dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:rpbBackgroundColor="@color/signalBarBackground"
+                                app:rpbBackgroundTextColor="@color/colorAccent"
+                                app:rpbShowProgressText="false"
+                                app:rpbCornerRadius="4dp"
+                                app:rpbProgressColor="@color/colorAccent"
+                                app:rpbProgressTextColor="@color/normalText"
+                                app:rpbTextPadding="5dp"
+                                app:rpbAnimationLength="600" />
+
+                            <TextView
+                                android:id="@+id/signal_one_value"
+                                style="@style/StandardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/normalText"
+                                app:layout_constraintStart_toStartOf="@id/progress_bar_signal_one"
+                                app:layout_constraintEnd_toEndOf="@id/progress_bar_signal_one"
+                                app:layout_constraintTop_toTopOf="@id/progress_bar_signal_one"
+                                app:layout_constraintBottom_toBottomOf="@id/progress_bar_signal_one"
+                                android:gravity="center" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/signal_one_label"
+                            style="@style/SmallLabelText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@id/progress_bar_signal_one"
+                            android:text="@string/rsrp_label" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/signal_two_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end">
+
+                            <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                                android:id="@+id/progress_bar_signal_two"
+                                android:layout_width="match_parent"
+                                android:layout_height="32dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:layout_marginTop="@dimen/space_between_bars"
+                                app:rpbBackgroundColor="@color/signalBarBackground"
+                                app:rpbBackgroundTextColor="@color/colorAccent"
+                                app:rpbShowProgressText="false"
+                                app:rpbCornerRadius="4dp"
+                                app:rpbProgressColor="@color/colorAccent"
+                                app:rpbProgressTextColor="@color/normalText"
+                                app:rpbTextPadding="5dp"
+                                app:rpbAnimationLength="600" />
+
+                            <TextView
+                                android:id="@+id/signal_two_value"
+                                style="@style/StandardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/normalText"
+                                app:layout_constraintStart_toStartOf="@id/progress_bar_signal_two"
+                                app:layout_constraintEnd_toEndOf="@id/progress_bar_signal_two"
+                                app:layout_constraintTop_toTopOf="@id/progress_bar_signal_two"
+                                app:layout_constraintBottom_toBottomOf="@id/progress_bar_signal_two"
+                                android:gravity="center" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/signal_two_label"
+                            style="@style/SmallLabelText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@id/progress_bar_signal_two"
+                            android:text="@string/rsrq_label" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/signal_three_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end">
+
+                            <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                                android:id="@+id/progress_bar_signal_three"
+                                android:layout_width="match_parent"
+                                android:layout_height="32dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:layout_marginTop="@dimen/space_between_bars"
+                                app:rpbBackgroundColor="@color/signalBarBackground"
+                                app:rpbBackgroundTextColor="@color/colorAccent"
+                                app:rpbShowProgressText="false"
+                                app:rpbCornerRadius="4dp"
+                                app:rpbProgressColor="@color/colorAccent"
+                                app:rpbProgressTextColor="@color/normalText"
+                                app:rpbTextPadding="5dp"
+                                app:rpbAnimationLength="600" />
+
+                            <TextView
+                                android:id="@+id/signal_three_value"
+                                style="@style/StandardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/normalText"
+                                app:layout_constraintStart_toStartOf="@id/progress_bar_signal_three"
+                                app:layout_constraintEnd_toEndOf="@id/progress_bar_signal_three"
+                                app:layout_constraintTop_toTopOf="@id/progress_bar_signal_three"
+                                app:layout_constraintBottom_toBottomOf="@id/progress_bar_signal_three"
+                                android:gravity="center" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/signal_three_label"
+                            style="@style/SmallLabelText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center"
+                            app:layout_constraintTop_toBottomOf="@id/progress_bar_signal_three"
+                            android:text="@string/snr_label" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/neighbors_card_view"
+            style="?attr/cardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            card_view:contentPadding="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/x_small_margin"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/card_title"
+                    android:padding="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/neighbors_icon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:contentDescription="@string/my_location_icon_description"
+                        android:src="@drawable/ic_weak_signal" />
+
+                    <TextView
+                        android:id="@+id/neighbors_title"
+                        style="@style/CardTitleStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_title_neighbors" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nr_neighbors_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        style="@style/StandardText"
+                        android:text="@string/card_title_neighbors_nr" />
+
+                    <TableLayout
+                        android:id="@+id/nr_neighbors_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:stretchColumns="*" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lte_neighbors_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        style="@style/StandardText"
+                        android:text="@string/card_title_neighbors_lte" />
+
+                    <TableLayout
+                        android:id="@+id/lte_neighbors_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:stretchColumns="*" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/umts_neighbors_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        style="@style/StandardText"
+                        android:text="@string/card_title_neighbors_umts" />
+
+                    <TableLayout
+                        android:id="@+id/umts_neighbors_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:stretchColumns="*" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/gsm_neighbors_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        style="@style/StandardText"
+                        android:text="@string/card_title_neighbors_gsm" />
+
+                    <TableLayout
+                        android:id="@+id/gsm_neighbors_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:stretchColumns="*" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

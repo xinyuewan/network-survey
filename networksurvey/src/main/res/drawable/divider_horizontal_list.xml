@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 自定义水平分隔线：高度1dp，灰色 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- 分隔线高度（与原系统资源一致） -->
+    <size android:height="1dp"/>
+
+    <!-- 分隔线颜色（可根据需求修改，这里用浅灰色） -->
+    <solid android:color="@android:color/darker_gray"/>
+
+</shape>
