@@ -11,29 +11,35 @@ import com.craxiom.networksurvey.model.SpeedTestResult
 @Database(entities = [SpeedTestResult::class], version = 1, exportSchema = false)
 abstract class SpeedTestBase : RoomDatabase() {
     // 提供Dao接口的访问
-    abstract fun SpeedTestResultDao(): SpeedTestResultDao
+    abstract fun speedTestResultDao(): SpeedTestResultDao
 
     companion object {
         // 单例模式，防止创建多个数据库实例
         @Volatile
         private var INSTANCE: SpeedTestBase? = null
 
-        // 初始化数据库（接收Application上下文）
+        /**
+         * 初始化数据库（必须传入 Application Context）
+         */
         fun init(context: Context) {
             if (INSTANCE == null) {
                 synchronized(this) {
-                    INSTANCE = Room.databaseBuilder(
-                        context.applicationContext, // 必须用Application上下文
-                        SpeedTestBase::class.java,
-                        "speed_test_database"
-                    ).build()
+                    if (INSTANCE == null) {
+                        INSTANCE = Room.databaseBuilder(
+                            context.applicationContext,
+                            SpeedTestBase::class.java,
+                            "speed_test_database"
+                        ).build()
+                    }
                 }
             }
         }
 
-        // 获取实例
+        /**
+         * 获取数据库实例
+         */
         fun getInstance(): SpeedTestBase {
-            return INSTANCE ?: throw IllegalStateException("AppDatabase未初始化，请先调用init()")
+            return INSTANCE ?: throw IllegalStateException("SpeedTestBase 未初始化，请先调用 init(context)")
         }
     }
 }

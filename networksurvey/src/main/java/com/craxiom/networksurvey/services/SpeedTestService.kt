@@ -1,90 +1,161 @@
 package com.craxiom.networksurvey.service
 
-import android.app.Service
+import android.app.*
 import android.content.Intent
 import android.os.Binder
+import android.os.Build
 import android.os.IBinder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import kotlin.random.Random
+import androidx.core.app.NotificationCompat
+import com.craxiom.networksurvey.NetworkSurveyActivity
+import com.craxiom.networksurvey.R
+import com.craxiom.networksurvey.logging.db.SpeedTestBase
+import com.craxiom.networksurvey.logging.db.dao.SpeedTestResultDao
+import com.craxiom.networksurvey.model.SpeedTestEvent
+import com.craxiom.networksurvey.model.SpeedTestResult
+import com.craxiom.networksurvey.util.NetworkSpeedTester
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import java.util.UUID
 
-/**
- * 后台测速服务：负责执行下载、上传、时延三步。
- */
 class SpeedTestService : Service() {
 
-    // Binder
+    private val binder = LocalBinder()
+    private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private lateinit var networkSpeedTester: NetworkSpeedTester
+    private var isTesting = false
+
+    fun isTesting(): Boolean = isTesting
+
+    private lateinit var dao: SpeedTestResultDao
+
+    // 实时事件
+    private val _events = MutableSharedFlow<SpeedTestEvent>(replay = 0)
+    val events = _events.asSharedFlow()
+
+    // 每个指标缓存
+    private val _lastLatency = MutableStateFlow<Long?>(null)
+    val lastLatency: StateFlow<Long?> = _lastLatency
+
+    private val _lastDownload = MutableStateFlow<Double?>(null)
+    val lastDownload: StateFlow<Double?> = _lastDownload
+
+    private val _lastUpload = MutableStateFlow<Double?>(null)
+    val lastUpload: StateFlow<Double?> = _lastUpload
+
+    private val _lastCompleted = MutableStateFlow<SpeedTestResult?>(null)
+    val lastCompleted: StateFlow<SpeedTestResult?> = _lastCompleted
+
     inner class LocalBinder : Binder() {
         fun getService(): SpeedTestService = this@SpeedTestService
     }
 
-    private val binder = LocalBinder()
-
-    // 协程作用域（随 Service 生命周期取消）
-    private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-    // 测试进度状态流
-    private val _progressFlow = MutableStateFlow<TestState>(TestState.Idle)
-    val progressFlow: StateFlow<TestState> = _progressFlow
+    override fun onCreate() {
+        super.onCreate()
+        networkSpeedTester = NetworkSpeedTester(this)
+        SpeedTestBase.init(applicationContext)
+        dao = SpeedTestBase.getInstance().speedTestResultDao()
+        createNotificationChannel()
+    }
 
     override fun onBind(intent: Intent?): IBinder = binder
 
-    override fun onDestroy() {
-        super.onDestroy()
-        serviceScope.cancel() // 确保退出时取消协程
-    }
-
-    /**
-     * 一次性执行完整测速流程
-     */
-    fun startFullTest() {
-        serviceScope.launch {
-            // Step 1: 下载测速
-            repeat(100) { i ->
-                delay(50) // 模拟下载耗时
-                val speed = Random.nextDouble(50.0, 150.0)
-                _progressFlow.value = TestState.Downloading(speed, i + 1)
-            }
-
-            // Step 2: 上传测速
-            repeat(100) { i ->
-                delay(50) // 模拟上传耗时
-                val speed = Random.nextDouble(20.0, 80.0)
-                _progressFlow.value = TestState.Uploading(speed, i + 1)
-            }
-
-            // Step 3: 时延测试
-            delay(500)
-            val latency = Random.nextLong(20, 100)
-            _progressFlow.value = TestState.Pinging(latency)
-
-            // Step 4: 完成
-            _progressFlow.value = TestState.Finished(
-                downloadSpeed = Random.nextDouble(50.0, 150.0),
-                uploadSpeed = Random.nextDouble(20.0, 80.0),
-                latency = latency
-            )
+    private suspend fun emitEvent(event: SpeedTestEvent) {
+        _events.emit(event)
+        when(event){
+            is SpeedTestEvent.Latency -> _lastLatency.value = event.pingMs
+            is SpeedTestEvent.Download -> _lastDownload.value = event.speedMbps
+            is SpeedTestEvent.Upload -> _lastUpload.value = event.speedMbps
+            is SpeedTestEvent.Completed -> _lastCompleted.value = event.record
+            else -> {}
         }
     }
 
-    /**
-     * 定义测试状态机
-     */
-    sealed class TestState {
-        object Idle : TestState()
-        data class Downloading(val speedMbps: Double, val progressPercent: Int) : TestState()
-        data class Uploading(val speedMbps: Double, val progressPercent: Int) : TestState()
-        data class Pinging(val latencyMs: Long) : TestState()
-        data class Finished(
-            val downloadSpeed: Double,
-            val uploadSpeed: Double,
-            val latency: Long
-        ) : TestState()
+    fun startSpeedTest(networkType: String) {
+        if (isTesting) return
+
+        isTesting = true
+        startForeground(NOTIFICATION_ID, createNotification())
+
+        serviceScope.launch {
+            try {
+                val latency = networkSpeedTester.testLatency()
+                emitEvent(SpeedTestEvent.Latency(latency))
+
+                emitEvent(SpeedTestEvent.Download(0.0)) // 重置显示
+                val downloadSpeed = networkSpeedTester.testDownloadSpeed()
+                emitEvent(SpeedTestEvent.Download(downloadSpeed))
+
+                emitEvent(SpeedTestEvent.Upload(0.0))
+                val uploadSpeed = networkSpeedTester.testUploadSpeed()
+                emitEvent(SpeedTestEvent.Upload(uploadSpeed))
+
+                val record = SpeedTestResult(
+                    id = UUID.randomUUID().toString(),
+                    timestamp = System.currentTimeMillis(),
+                    networkType = networkType,
+                    downloadSpeedMbps = downloadSpeed,
+                    uploadSpeedMbps = uploadSpeed,
+                    latencyMs = latency
+                )
+                dao.insertResult(record)
+                emitEvent(SpeedTestEvent.Completed(record))
+
+            } catch (e: Exception) {
+                emitEvent(SpeedTestEvent.Error(e.message ?: "测速失败"))
+            } finally {
+                isTesting = false
+                stopForeground(STOP_FOREGROUND_REMOVE)
+            }
+        }
+    }
+
+    fun cancelTest() {
+        if (isTesting) {
+            networkSpeedTester.cancelTest()
+            isTesting = false
+            serviceScope.launch { emitEvent(SpeedTestEvent.Error("测试已取消")) }
+            stopForeground(STOP_FOREGROUND_REMOVE)
+        }
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "网络测速",
+                NotificationManager.IMPORTANCE_LOW
+            )
+            channel.description = "网络测速服务正在运行"
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun createNotification(): Notification {
+        val intent = Intent(this, NetworkSurveyActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("网络测速中")
+            .setContentText("正在进行网络速度测试")
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .build()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        serviceScope.cancel()
+    }
+
+    companion object {
+        const val CHANNEL_ID = "SPEED_TEST_CHANNEL"
+        const val NOTIFICATION_ID = 1001
     }
 }

@@ -1,18 +1,16 @@
 package com.craxiom.networksurvey.fragments
 
-import android.content.Context
 import com.craxiom.networksurvey.logging.db.SpeedTestBase
-import com.craxiom.networksurvey.logging.db.dao.SpeedTestResultDao
 import com.craxiom.networksurvey.model.SpeedTestResult
 import kotlinx.coroutines.flow.Flow
 
 object SpeedTestRepository {
-    // 延迟初始化Dao
+    // 延迟初始化 Dao
     private val dao by lazy {
-        SpeedTestBase.getInstance().SpeedTestResultDao()
+        SpeedTestBase.getInstance().speedTestResultDao()
     }
 
-    // 获取所有结果的Flow（自动监听数据变化）
+    // 获取所有结果的 Flow（自动监听数据变化）
     val testResults: Flow<List<SpeedTestResult>>
         get() = dao.getAllResults()
 
@@ -21,9 +19,8 @@ object SpeedTestRepository {
         dao.insertResult(result)
     }
 
-    // 清除历史（挂起函数，调用Room的suspend方法）
+    // 清除历史记录
     suspend fun clearHistory() {
         dao.clearAllResults()
     }
-
 }

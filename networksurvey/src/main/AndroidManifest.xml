@@ -105,6 +105,11 @@
             android:foregroundServiceType="dataSync"
             tools:node="merge" />
 
+        <service
+            android:name=".service.SpeedTestService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
         <meta-data
             android:name="android.content.APP_RESTRICTIONS"
             android:resource="@xml/app_restrictions" />
