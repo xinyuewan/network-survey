@@ -14,48 +14,48 @@
         android:orientation="vertical">
 
         <!-- 服务小区信息卡片 -->
-        <LinearLayout
-            android:id="@+id/cellInfoCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/card_bg"
-            android:orientation="vertical"
-            android:padding="16dp">
+<!--        <LinearLayout-->
+<!--            android:id="@+id/cellInfoCard"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="16dp"-->
+<!--            android:background="@drawable/card_bg"-->
+<!--            android:orientation="vertical"-->
+<!--            android:padding="16dp">-->
 
-            <!-- 网络类型标签 -->
-            <TextView
-                android:id="@+id/cellType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LTE"
-                android:textColor="@color/primary"
-                android:textStyle="bold" />
+<!--            &lt;!&ndash; 网络类型标签 &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/cellType"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="LTE"-->
+<!--                android:textColor="@color/primary"-->
+<!--                android:textStyle="bold" />-->
 
-            <!-- 信号指标行 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+<!--            &lt;!&ndash; 信号指标行 &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:orientation="horizontal">-->
 
-                <TextView
-                    android:id="@+id/rsrpValue"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="RSRP: -- dBm" />
+<!--                <TextView-->
+<!--                    android:id="@+id/rsrpValue"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="RSRP: &#45;&#45; dBm" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-            <!-- 小区ID信息 -->
-            <TextView
-                android:id="@+id/cellIdInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Cell ID: --" />
-        </LinearLayout>
+<!--            &lt;!&ndash; 小区ID信息 &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/cellIdInfo"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:text="Cell ID: &#45;&#45;" />-->
+<!--        </LinearLayout>-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

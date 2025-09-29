@@ -102,6 +102,7 @@ class SpeedTestFragment : Fragment() {
     }
 
     private fun startSpeedTest() {
+
         if (!networkSpeedTester.isNetworkAvailable()) {
             showToast(getString(R.string.error_no_network))
             return

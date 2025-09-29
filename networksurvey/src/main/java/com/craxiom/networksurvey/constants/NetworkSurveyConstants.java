@@ -38,6 +38,7 @@ public class NetworkSurveyConstants
     public static final String LTE_FILE_NAME_PREFIX = "craxiom-lte-";
     public static final String NR_FILE_NAME_PREFIX = "craxiom-nr-";
     public static final String CELLULAR_FILE_NAME_PREFIX = "craxiom-cellular-";
+    public static final String CELLULAR_FILE_NAME_PREFIX2 = "cellular-";
     public static final String WIFI_FILE_NAME_PREFIX = "craxiom-wifi-";
     public static final String BLUETOOTH_FILE_NAME_PREFIX = "craxiom-bluetooth-";
     public static final String GNSS_FILE_NAME_PREFIX = "craxiom-gnss-";

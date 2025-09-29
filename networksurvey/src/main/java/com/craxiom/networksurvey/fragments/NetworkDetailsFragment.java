@@ -99,6 +99,7 @@ public class NetworkDetailsFragment extends AServiceDataFragment implements ICel
     private SharedViewModel sharedViewModel;
     private AirplaneModeReceiver airplaneModeReceiver;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -107,6 +108,7 @@ public class NetworkDetailsFragment extends AServiceDataFragment implements ICel
         Bundle args = getArguments();
         //noinspection DataFlowIssue
         subscriptionId = args.getInt(SUBSCRIPTION_ID_KEY, -1);
+
     }
 
     @Nullable
@@ -188,6 +190,7 @@ public class NetworkDetailsFragment extends AServiceDataFragment implements ICel
         removeObservers();
 
         super.onDestroyView();
+
     }
 
     @Override

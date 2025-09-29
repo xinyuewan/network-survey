@@ -99,6 +99,51 @@ public class CellularUtils
             {106, 70656, 70705},
     };
 
+
+    /**
+     * 扩展LTE频段信息，包含[频段号, EARFCN起始, EARFCN结束, 最低频率(MHz), EARFCN偏移量]
+     */
+    private static final int[][] DOWNLINK_LTE_BANDS_EXTENDED = {
+            {1, 0, 599, 2110, 0},         // Band 1: 2110-2170 MHz
+            {2, 600, 1199, 1930, 600},    // Band 2: 1930-1990 MHz
+            {3, 1200, 1949, 1805, 1200},  // Band 3: 1805-1880 MHz
+            {4, 1950, 2399, 2110, 1950},  // Band 4: 2110-2155 MHz
+            {5, 2400, 2649, 869, 2400},   // Band 5: 869-894 MHz
+            {7, 2750, 3449, 2620, 2750},  // Band 7: 2620-2690 MHz
+            {8, 3450, 3799, 925, 3450},   // Band 8: 925-960 MHz
+            {12, 5010, 5179, 729, 5010},  // Band 12: 729-746 MHz
+            {13, 5180, 5279, 746, 5180},  // Band 13: 746-756 MHz
+            {17, 5730, 5849, 704, 5730},  // Band 17: 704-716 MHz
+            {20, 6150, 6449, 791, 6150},  // Band 20: 791-821 MHz
+            {28, 9210, 9659, 758, 9210},  // Band 28: 758-803 MHz
+            {38, 37750, 38249, 2570, 37750}, // Band 38: 2570-2620 MHz
+            {40, 38650, 39649, 2300, 38650}, // Band 40: 2300-2400 MHz
+            {41, 39650, 41589, 2496, 39650}, // Band 41: 2496-2690 MHz
+            {66, 66436, 67335, 2110, 66436}, // Band 66: 2110-2200 MHz
+            {71, 68586, 68935, 617, 68586},  // Band 71: 617-652 MHz
+    };
+
+    /**
+     * 将LTE下行EARFCN转换为频率（MHz）
+     *
+     * @param earfcn LTE下行EARFCN值
+     * @return 频率（MHz），无效时返回-1.0
+     */
+    public static double earfcnToFrequencyMhz(int earfcn) {
+        for (int[] band : DOWNLINK_LTE_BANDS_EXTENDED) {
+            int bandNumber = band[0];
+            int earfcnStart = band[1];
+            int earfcnEnd = band[2];
+            int fLow = band[3];
+            int nOff = band[4];
+
+            if (earfcn >= earfcnStart && earfcn <= earfcnEnd) {
+                return fLow + 0.1 * (earfcn - nOff); // 0.1 MHz = 100 kHz（LTE步长）
+            }
+        }
+        return -1.0;
+    }
+
     /**
      * Gets the band name for a given LTE band number.
      * The band names are based on common frequency designations and regional usage.
@@ -326,6 +371,60 @@ public class CellularUtils
         }
 
         return -1;
+    }
+
+    /**
+     * 5G NR频段频率范围表（参考3GPP TS 38.104）
+     * 格式：{频段号, 起始频率(MHz), 结束频率(MHz)}
+     * 包含Sub-6 GHz（FR1）和毫米波（FR2）常见频段
+     */
+    private static final int[][] NR_BAND_FREQ_RANGES = {
+            {1, 2110, 2170},       // n1: 2110-2170 MHz (FDD下行)
+            {2, 1930, 1990},       // n2: 1930-1990 MHz (FDD下行)
+            {3, 1805, 1880},       // n3: 1805-1880 MHz (FDD下行)
+            {5, 869, 894},         // n5: 869-894 MHz (FDD下行)
+            {7, 2620, 2690},       // n7: 2620-2690 MHz (FDD下行)
+            {8, 925, 960},         // n8: 925-960 MHz (FDD下行)
+            {12, 729, 746},        // n12: 729-746 MHz (FDD下行)
+            {20, 791, 821},        // n20: 791-821 MHz (FDD下行)
+            {28, 758, 803},        // n28: 758-803 MHz (FDD下行)
+            {38, 2570, 2620},      // n38: 2570-2620 MHz (TDD)
+            {41, 2496, 2690},      // n41: 2496-2690 MHz (TDD)
+            {66, 2110, 2200},      // n66: 2110-2200 MHz (FDD下行)
+            {77, 3300, 4200},      // n77: 3300-4200 MHz (TDD)
+            {78, 3300, 3800},      // n78: 3300-3800 MHz (TDD)
+            {79, 4400, 5000},      // n79: 4400-5000 MHz (TDD)
+            {257, 26500, 29500},   // n257: 26.5-29.5 GHz (毫米波)
+            {258, 24250, 27500},   // n258: 24.25-27.5 GHz (毫米波)
+            {259, 39500, 43500},   // n259: 39.5-43.5 GHz (毫米波)
+            {260, 37000, 40000},   // n260: 37-40 GHz (毫米波)
+            {261, 27500, 28350},   // n261: 27.5-28.35 GHz (毫米波)
+    };
+
+    /**
+     * 根据NARFCN获取5G NR频段号
+     *
+     * @param narfcn 5G NR的ARFCN值
+     * @return 频段号（如1、78等），无效时返回-1
+     */
+    public static int narfcnToNrBand(int narfcn) {
+        double frequencyMhz = narfcnToFrequencyMhz(narfcn);
+        if (frequencyMhz < 0) {
+            return -1; // 无效频率
+        }
+
+        // 遍历频段范围，匹配频率所在的频段
+        for (int[] band : NR_BAND_FREQ_RANGES) {
+            int bandNumber = band[0];
+            double startFreq = band[1];
+            double endFreq = band[2];
+
+            if (frequencyMhz >= startFreq && frequencyMhz <= endFreq) {
+                return bandNumber;
+            }
+        }
+
+        return -1; // 未匹配到已知频段
     }
 
     /**

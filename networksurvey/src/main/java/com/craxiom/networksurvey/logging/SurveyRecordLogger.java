@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 
@@ -404,9 +405,16 @@ public abstract class SurveyRecordLogger
         logFileDirectoryPath = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DOWNLOADS) + "/" + logDirectoryName + "/";
 
-        String filePath = logFileDirectoryPath +
-                fileNamePrefix + SurveyRecordProcessor.DATE_TIME_FORMATTER.format(LocalDateTime.now()) + ".gpkg";
+        String filePath = "";
+        if (Objects.equals(fileNamePrefix, "cellular_aggregate-")){
+            filePath = logFileDirectoryPath +
+                    fileNamePrefix + SurveyRecordProcessor.DATE_TIME_FORMATTER.format(LocalDateTime.now()) + ".sscat";
 
+        }
+        else {
+            filePath = logFileDirectoryPath +
+                    fileNamePrefix + SurveyRecordProcessor.DATE_TIME_FORMATTER.format(LocalDateTime.now()) + ".gpkg";
+        }
         // I have seen a couple times now that it is possible that the RolloverWorker can create two GeoPackage files
         // within the same second. Both instances were bluetooth so I am thinking there were 500+ devices around which
         // caused the rollover worker to be run twice in the same scan iteration. I also increased the rollover

@@ -64,6 +64,7 @@ import com.craxiom.networksurvey.listeners.IGnssSurveyRecordListener;
 import com.craxiom.networksurvey.listeners.ILoggingChangeListener;
 import com.craxiom.networksurvey.listeners.IUploadRecordCountListener;
 import com.craxiom.networksurvey.listeners.IWifiSurveyRecordListener;
+//import com.craxiom.networksurvey.logging.CellularAggregateLogger;
 import com.craxiom.networksurvey.logging.DeviceStatusCsvLogger;
 import com.craxiom.networksurvey.logging.db.DbUploadStore;
 import com.craxiom.networksurvey.model.BatteryPauseState;
@@ -142,6 +143,7 @@ public class NetworkSurveyService extends Service implements IConnectionStateLis
     private ExtraLocationListener gnssLocationListener;
     private ExtraLocationListener networkLocationListener;
     private DbUploadStore dbUploadStore;
+//    private CellularAggregateLogger cellularAggregateLogger;
 
     private DeviceStatusCsvLogger deviceStatusCsvLogger;
     private Looper serviceLooper;
@@ -213,7 +215,7 @@ public class NetworkSurveyService extends Service implements IConnectionStateLis
         wifiController = new WifiController(this, executorService, serviceLooper, serviceHandler, surveyRecordProcessor, uiThreadHandler);
         bluetoothController = new BluetoothController(this, executorService, serviceLooper, serviceHandler, surveyRecordProcessor, uiThreadHandler);
         gnssController = new GnssController(this, executorService, serviceLooper, serviceHandler, surveyRecordProcessor);
-
+        cellularController = new CellularController(this, executorService, serviceLooper, serviceHandler, surveyRecordProcessor);
         setScanRateValues();
         readMdmOverridePreference();
         PreferenceUtils.populateRandomMqttClientIdIfMissing(context);
@@ -253,6 +255,7 @@ public class NetworkSurveyService extends Service implements IConnectionStateLis
 
         updateServiceNotification();
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
@@ -442,7 +445,6 @@ public class NetworkSurveyService extends Service implements IConnectionStateLis
 
         surveyServiceBinder.onDestroy();
         surveyServiceBinder = null;
-
         super.onDestroy();
     }
 
@@ -1571,6 +1573,8 @@ public class NetworkSurveyService extends Service implements IConnectionStateLis
             Timber.d("Skipping location listener registration - paused for battery");
             return;
         }
+
+        Timber.d("Registering the location listener");
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {

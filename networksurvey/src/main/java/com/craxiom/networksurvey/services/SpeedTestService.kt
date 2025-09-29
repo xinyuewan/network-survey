@@ -78,14 +78,16 @@ class SpeedTestService : Service() {
 
         serviceScope.launch {
             try {
+                emitEvent(SpeedTestEvent.Latency(0)) // 重置显示
+                emitEvent(SpeedTestEvent.Download(0.0)) // 重置显示
+                emitEvent(SpeedTestEvent.Upload(0.0))
+
                 val latency = networkSpeedTester.testLatency()
                 emitEvent(SpeedTestEvent.Latency(latency))
 
-                emitEvent(SpeedTestEvent.Download(0.0)) // 重置显示
                 val downloadSpeed = networkSpeedTester.testDownloadSpeed()
                 emitEvent(SpeedTestEvent.Download(downloadSpeed))
 
-                emitEvent(SpeedTestEvent.Upload(0.0))
                 val uploadSpeed = networkSpeedTester.testUploadSpeed()
                 emitEvent(SpeedTestEvent.Upload(uploadSpeed))
 
