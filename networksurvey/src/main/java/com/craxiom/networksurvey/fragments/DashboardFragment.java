@@ -130,7 +130,7 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
         initializeLocationTextView();
         initializeUiListeners();
         initializeObservers();
-        initializeUploadUiState();
+//        initializeUploadUiState();
         queryUploadQueueCount();
 
         binding.dashboardScrollView.getViewTreeObserver().addOnPreDrawListener(() -> {
@@ -158,7 +158,7 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
         // instead of recalling the initialize view method each time the fragment is resumed.
         initializeLocationTextView();
 
-        observeUploadWork();
+//        observeUploadWork();
 
         startAndBindToService();
 
@@ -239,7 +239,7 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
         }
 
         // Manually call the updateScanningIndicators method to ensure that the UI is updated
-        updateScanningIndicators();
+//        updateScanningIndicators();
         viewModel.setUploadScanningActive(uploadScanningActive);
 
         updateBatteryManagementStatus(service);
@@ -344,11 +344,11 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
      */
     private void initializeUiListeners()
     {
-        binding.startScanningButton.setOnClickListener(v -> startSavingRecordsForUpload());
-        binding.stopScanningButton.setOnClickListener(v -> stopSavingRecordsForUpload());
-        binding.uploadSettingsButton.setOnClickListener(v -> navigateToUploadSettings());
-        binding.uploadButton.setOnClickListener(v -> showUploadDialog());
-        binding.uploadCancelButton.setOnClickListener(v -> cancelUploads());
+//        binding.startScanningButton.setOnClickListener(v -> startSavingRecordsForUpload());
+//        binding.stopScanningButton.setOnClickListener(v -> stopSavingRecordsForUpload());
+//        binding.uploadSettingsButton.setOnClickListener(v -> navigateToUploadSettings());
+//        binding.uploadButton.setOnClickListener(v -> showUploadDialog());
+//        binding.uploadCancelButton.setOnClickListener(v -> cancelUploads());
 
         initializeLoggingSwitch(binding.cellularLoggingToggleSwitch, (newEnabledState, toggleSwitch) -> {
             if (newEnabledState && checkBatteryOptimizationBeforeLogging())
@@ -457,7 +457,7 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
 
         binding.mqttFragmentButton.setOnClickListener(c -> navigateToMqttFragment());
 
-        binding.uploadHelpIcon.setOnClickListener(c -> showUploadHelpDialog());
+//        binding.uploadHelpIcon.setOnClickListener(c -> showUploadHelpDialog());
         binding.cdrHelpIcon.setOnClickListener(c -> showCdrHelpDialog());
         binding.fileHelpIcon.setOnClickListener(c -> showFileMqttHelpDialog());
         binding.mqttHelpIcon.setOnClickListener(c -> showFileMqttHelpDialog());
@@ -682,13 +682,13 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
     {
         final LifecycleOwner viewLifecycleOwner = getViewLifecycleOwner();
 
-        viewModel.getCellularUploadQueueCount().observe(viewLifecycleOwner, this::updateCellularUploadQueueCountUI);
+//        viewModel.getCellularUploadQueueCount().observe(viewLifecycleOwner, this::updateCellularUploadQueueCountUI);
 //        viewModel.getWifiUploadQueueCount().observe(viewLifecycleOwner, this::updateWifiUploadQueueCountUI);
 
         viewModel.getProviderEnabled().observe(viewLifecycleOwner, this::updateLocationProviderStatus);
         viewModel.getLocation().observe(viewLifecycleOwner, this::updateLocationTextView);
 
-        viewModel.getUploadScanningActive().observe(viewLifecycleOwner, this::updateUploadRecordSavingUi);
+//        viewModel.getUploadScanningActive().observe(viewLifecycleOwner, this::updateUploadRecordSavingUi);
 
         viewModel.getCellularLoggingEnabled().observe(viewLifecycleOwner, this::updateCellularLogging);
 //        viewModel.getWifiLoggingEnabled().observe(viewLifecycleOwner, this::updateWifiLogging);
@@ -730,19 +730,19 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
         viewModel.getDeviceStatusMqttStreamEnabled().removeObservers(viewLifecycleOwner);
     }
 
-    private void initializeUploadUiState()
-    {
-        final Context context = getContext();
-        if (context == null) return;
-
-        if (MdmUtils.isExternalDataUploadAllowed(context))
-        {
-            binding.dbLoggingCardView.setVisibility(View.VISIBLE);
-        } else
-        {
-            binding.dbLoggingCardView.setVisibility(View.GONE);
-        }
-    }
+//    private void initializeUploadUiState()
+//    {
+//        final Context context = getContext();
+//        if (context == null) return;
+//
+//        if (MdmUtils.isExternalDataUploadAllowed(context))
+//        {
+//            binding.dbLoggingCardView.setVisibility(View.VISIBLE);
+//        } else
+//        {
+//            binding.dbLoggingCardView.setVisibility(View.GONE);
+//        }
+//    }
 
     private synchronized void updateLoggingState(NetworkSurveyService networkSurveyService)
     {
@@ -1264,24 +1264,24 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
         });
     }
 
-    private void updateCellularUploadQueueCountUI(int count)
-    {
-        Context context = getContext();
-        if (context == null) return;
-
-        // Check if cellular surveys should be enabled for upload
-        boolean shouldStartCellular = PreferenceUtils.shouldStartCellularForUpload(context);
-
-        if (count == 0 && !shouldStartCellular)
-        {
-            // Show disabled state if count is 0 and cellular isn't needed for any upload target
-            binding.cellularUploadQueueCount.setText(getString(R.string.cellular_upload_queue_count_disabled));
-        } else
-        {
-            // Show normal count (even if disabled, if there are records to upload)
-            binding.cellularUploadQueueCount.setText(getString(R.string.cellular_upload_queue_count, count));
-        }
-    }
+//    private void updateCellularUploadQueueCountUI(int count)
+//    {
+//        Context context = getContext();
+//        if (context == null) return;
+//
+//        // Check if cellular surveys should be enabled for upload
+//        boolean shouldStartCellular = PreferenceUtils.shouldStartCellularForUpload(context);
+//
+//        if (count == 0 && !shouldStartCellular)
+//        {
+//            // Show disabled state if count is 0 and cellular isn't needed for any upload target
+//            binding.cellularUploadQueueCount.setText(getString(R.string.cellular_upload_queue_count_disabled));
+//        } else
+//        {
+//            // Show normal count (even if disabled, if there are records to upload)
+//            binding.cellularUploadQueueCount.setText(getString(R.string.cellular_upload_queue_count, count));
+//        }
+//    }
 
 //    private void updateWifiUploadQueueCountUI(int count)
 //    {
@@ -1351,125 +1351,125 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
             return;
         }
 
-        binding.startScanningButton.setEnabled(false);
-        toggleUploadRecordSaving(true);
-        resetUploadUi();
+//        binding.startScanningButton.setEnabled(false);
+//        toggleUploadRecordSaving(true);
+//        resetUploadUi();
     }
 
     /**
      * Updates the UI and stops the writing the cellular and wifi records to the internal DB, and
      * stops the cellular and wifi scanning if it is no longer being used by anything else.
      */
-    private void stopSavingRecordsForUpload()
-    {
-        Context context = getContext();
-        if (context == null) return;
+//    private void stopSavingRecordsForUpload()
+//    {
+//        Context context = getContext();
+//        if (context == null) return;
+//
+//        binding.stopScanningButton.setEnabled(false);
+//        toggleUploadRecordSaving(false);
+//    }
 
-        binding.stopScanningButton.setEnabled(false);
-        toggleUploadRecordSaving(false);
-    }
-
-    private void toggleUploadRecordSaving(boolean enable)
-    {
-        Context context = getContext();
-        if (context == null) return;
-
-        new UploadScanningTask(() -> {
-            if (service != null)
-            {
-                return service.toggleUploadRecordSaving(enable);
-            }
-            return new UploadScanningResult(false, false, context.getString(R.string.upload_saving_toggle_failed));
-        }, result -> {
-            // Update the view model based on the result
-            if (result.getSuccess())
-            {
-                viewModel.setUploadScanningActive(result.isEnabled());
-                // Store which surveys are currently active for icon display
-                if (result.isEnabled())
-                {
-                    currentActiveSurveys = result.getSurveysStarted();
-                } else
-                {
-                    currentActiveSurveys.clear();
-                }
-            } else
-            {
-                // Update the startScanningButton because it is disabled in the startSavingRecordsForUpload method
-                binding.startScanningButton.setEnabled(true);
-                viewModel.setUploadScanningActive(false);
-                currentActiveSurveys.clear();
-            }
-            // Return the message from the result for the toast
-            return result.getMessage();
-        }, context).execute();
-    }
+//    private void toggleUploadRecordSaving(boolean enable)
+//    {
+//        Context context = getContext();
+//        if (context == null) return;
+//
+//        new UploadScanningTask(() -> {
+//            if (service != null)
+//            {
+//                return service.toggleUploadRecordSaving(enable);
+//            }
+//            return new UploadScanningResult(false, false, context.getString(R.string.upload_saving_toggle_failed));
+//        }, result -> {
+//            // Update the view model based on the result
+//            if (result.getSuccess())
+//            {
+//                viewModel.setUploadScanningActive(result.isEnabled());
+//                // Store which surveys are currently active for icon display
+//                if (result.isEnabled())
+//                {
+//                    currentActiveSurveys = result.getSurveysStarted();
+//                } else
+//                {
+//                    currentActiveSurveys.clear();
+//                }
+//            } else
+//            {
+//                // Update the startScanningButton because it is disabled in the startSavingRecordsForUpload method
+//                binding.startScanningButton.setEnabled(true);
+//                viewModel.setUploadScanningActive(false);
+//                currentActiveSurveys.clear();
+//            }
+//            // Return the message from the result for the toast
+//            return result.getMessage();
+//        }, context).execute();
+//    }
 
     /**
      * Updates the upload record scanning and saving UI to indicate if logging is enabled or disabled.
      *
      * @param enabled The new status indicating if it is enabled.
      */
-    private void updateUploadRecordSavingUi(boolean enabled)
-    {
-        Context context = getContext();
-        if (context == null) return;
-
-        if (enabled)
-        {
-            binding.uploadScanningStatus.setText(R.string.scanning_active);
-            binding.uploadScanningStatus.setTextColor(ContextCompat.getColor(context, R.color.md_theme_primary));
-            binding.uploadScanningSpinner.setVisibility(View.VISIBLE);
-            binding.startScanningButton.setVisibility(View.GONE);
-            binding.stopScanningButton.setVisibility(View.VISIBLE);
-            binding.stopScanningButton.setEnabled(true);
-
-            // Show indicators for which survey types are active
-            updateScanningIndicators();
-        } else
-        {
-            binding.uploadScanningStatus.setText(R.string.scanning_inactive);
-            binding.uploadScanningStatus.setTextColor(ContextCompat.getColor(context, R.color.normalText));
-            binding.uploadScanningSpinner.setVisibility(View.GONE);
-            binding.startScanningButton.setVisibility(View.VISIBLE);
-            binding.startScanningButton.setEnabled(true);
-            binding.stopScanningButton.setVisibility(View.GONE);
-
-            // Hide all scanning indicators when not active
-            binding.uploadScanningIndicators.setVisibility(View.GONE);
-            binding.uploadCellularIndicator.setVisibility(View.GONE);
-            binding.uploadWifiIndicator.setVisibility(View.GONE);
-        }
-    }
+//    private void updateUploadRecordSavingUi(boolean enabled)
+//    {
+//        Context context = getContext();
+//        if (context == null) return;
+//
+//        if (enabled)
+//        {
+//            binding.uploadScanningStatus.setText(R.string.scanning_active);
+//            binding.uploadScanningStatus.setTextColor(ContextCompat.getColor(context, R.color.md_theme_primary));
+//            binding.uploadScanningSpinner.setVisibility(View.VISIBLE);
+//            binding.startScanningButton.setVisibility(View.GONE);
+//            binding.stopScanningButton.setVisibility(View.VISIBLE);
+//            binding.stopScanningButton.setEnabled(true);
+//
+//            // Show indicators for which survey types are active
+//            updateScanningIndicators();
+//        } else
+//        {
+//            binding.uploadScanningStatus.setText(R.string.scanning_inactive);
+//            binding.uploadScanningStatus.setTextColor(ContextCompat.getColor(context, R.color.normalText));
+//            binding.uploadScanningSpinner.setVisibility(View.GONE);
+//            binding.startScanningButton.setVisibility(View.VISIBLE);
+//            binding.startScanningButton.setEnabled(true);
+//            binding.stopScanningButton.setVisibility(View.GONE);
+//
+//            // Hide all scanning indicators when not active
+//            binding.uploadScanningIndicators.setVisibility(View.GONE);
+//            binding.uploadCellularIndicator.setVisibility(View.GONE);
+//            binding.uploadWifiIndicator.setVisibility(View.GONE);
+//        }
+//    }
 
     /**
      * Updates the visibility of scanning indicator icons based on which survey types are currently active.
      */
-    private void updateScanningIndicators()
-    {
-        Context context = getContext();
-        if (context == null) return;
-
-        boolean hasCellular = currentActiveSurveys.contains(SurveyTypes.CELLULAR);
-        boolean hasWifi = currentActiveSurveys.contains(SurveyTypes.WIFI);
-
-        // Show/hide individual indicators
-        binding.uploadCellularIndicator.setVisibility(hasCellular ? View.VISIBLE : View.GONE);
-        binding.uploadWifiIndicator.setVisibility(hasWifi ? View.VISIBLE : View.GONE);
-
-        // Show the indicators container if we have any active surveys
-        binding.uploadScanningIndicators.setVisibility((hasCellular || hasWifi) ? View.VISIBLE : View.GONE);
-
-        // Set icon colors to indicate active state
-        if (hasCellular)
-        {
-            binding.uploadCellularIndicator.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.md_theme_primary)));
-        }
-        if (hasWifi)
-        {
-            binding.uploadWifiIndicator.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.md_theme_primary)));
-        }
-    }
+//    private void updateScanningIndicators()
+//    {
+//        Context context = getContext();
+//        if (context == null) return;
+//
+//        boolean hasCellular = currentActiveSurveys.contains(SurveyTypes.CELLULAR);
+//        boolean hasWifi = currentActiveSurveys.contains(SurveyTypes.WIFI);
+//
+//        // Show/hide individual indicators
+//        binding.uploadCellularIndicator.setVisibility(hasCellular ? View.VISIBLE : View.GONE);
+//        binding.uploadWifiIndicator.setVisibility(hasWifi ? View.VISIBLE : View.GONE);
+//
+//        // Show the indicators container if we have any active surveys
+//        binding.uploadScanningIndicators.setVisibility((hasCellular || hasWifi) ? View.VISIBLE : View.GONE);
+//
+//        // Set icon colors to indicate active state
+//        if (hasCellular)
+//        {
+//            binding.uploadCellularIndicator.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.md_theme_primary)));
+//        }
+//        if (hasWifi)
+//        {
+//            binding.uploadWifiIndicator.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.md_theme_primary)));
+//        }
+//    }
 
     /**
      * Checks if battery optimization should be prompted before starting logging.
@@ -1505,7 +1505,7 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
         final Context context = getContext();
         if (context == null) return;
 
-        resetUploadUi();
+//        resetUploadUi();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         boolean prefUploadToOpenCellId = preferences.getBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_TO_OPENCELLID, NetworkSurveyConstants.DEFAULT_UPLOAD_TO_OPENCELLID);
@@ -1514,11 +1514,11 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
         boolean prefRetryUpload = preferences.getBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_RETRY_ENABLED, NetworkSurveyConstants.DEFAULT_UPLOAD_RETRY_ENABLED);
         boolean showDialogEveryTime = preferences.getBoolean(NetworkSurveyConstants.PROPERTY_SHOW_CONFIG_UPLOAD_DIALOG, true);
 
-        if (!showDialogEveryTime)
-        {
-            startUploadWorker(prefUploadToOpenCellId, prefAnonymously, prefUploadToBeaconDb, prefRetryUpload);
-            return;
-        }
+//        if (!showDialogEveryTime)
+//        {
+//            startUploadWorker(prefUploadToOpenCellId, prefAnonymously, prefUploadToBeaconDb, prefRetryUpload);
+//            return;
+//        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
@@ -1557,7 +1557,7 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
             edit.putBoolean(NetworkSurveyConstants.PROPERTY_SHOW_CONFIG_UPLOAD_DIALOG, !dontShowAgain);
             edit.apply();
 
-            startUploadWorker(uploadToOpenCellId, anonymously, uploadToBeaconDB, enableRetry);
+//            startUploadWorker(uploadToOpenCellId, anonymously, uploadToBeaconDB, enableRetry);
         }).setNeutralButton(R.string.preferences, (dialog, which) -> navigateToUploadSettings()).setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         AlertDialog dialog = builder.create();
@@ -1590,194 +1590,194 @@ public class DashboardFragment extends AServiceDataFragment implements LocationL
      * Updates UI when an upload is active, ongoing, or finishes.
      * Logs an error if multiple upload tasks are found (should only be one).
      */
-    private void observeUploadWork()
-    {
-        Context context = getContext();
-        if (context == null) return;
-
-        WorkManager.getInstance(context).getWorkInfosByTagLiveData(NsUploaderWorker.WORKER_TAG).observe(getViewLifecycleOwner(), workInfos -> {
-            Timber.d("observeUploadWork(): Found %s work tasks with the tag: %s", workInfos.size(), NsUploaderWorker.WORKER_TAG);
-
-            if (workInfos.size() > 1)
-            {
-                Timber.e("observeUploadWork(): Multiple active upload tasks found! Expected only one.");
-            }
-
-            boolean hasActiveUpload = false;
-            UUID activeWorkId = null;
-
-            for (WorkInfo workInfo : workInfos)
-            {
-                if (workInfo.getState() == WorkInfo.State.ENQUEUED || workInfo.getState() == WorkInfo.State.RUNNING)
-                {
-                    hasActiveUpload = true;
-                    activeWorkId = workInfo.getId();
-                    break; // Stop iterating after finding one active upload
-                }
-            }
-
-            if (hasActiveUpload)
-            {
-                showUploadProgress(activeWorkId); // Update UI for the active task
-            } else
-            {
-                binding.uploadButton.setEnabled(true);
-                binding.uploadProgressGroup.setVisibility(View.GONE);
-            }
-        });
-    }
+//    private void observeUploadWork()
+//    {
+//        Context context = getContext();
+//        if (context == null) return;
+//
+//        WorkManager.getInstance(context).getWorkInfosByTagLiveData(NsUploaderWorker.WORKER_TAG).observe(getViewLifecycleOwner(), workInfos -> {
+//            Timber.d("observeUploadWork(): Found %s work tasks with the tag: %s", workInfos.size(), NsUploaderWorker.WORKER_TAG);
+//
+//            if (workInfos.size() > 1)
+//            {
+//                Timber.e("observeUploadWork(): Multiple active upload tasks found! Expected only one.");
+//            }
+//
+//            boolean hasActiveUpload = false;
+//            UUID activeWorkId = null;
+//
+//            for (WorkInfo workInfo : workInfos)
+//            {
+//                if (workInfo.getState() == WorkInfo.State.ENQUEUED || workInfo.getState() == WorkInfo.State.RUNNING)
+//                {
+//                    hasActiveUpload = true;
+//                    activeWorkId = workInfo.getId();
+//                    break; // Stop iterating after finding one active upload
+//                }
+//            }
+//
+//            if (hasActiveUpload)
+//            {
+//                showUploadProgress(activeWorkId); // Update UI for the active task
+//            } else
+//            {
+//                binding.uploadButton.setEnabled(true);
+//                binding.uploadProgressGroup.setVisibility(View.GONE);
+//            }
+//        });
+//    }
 
     /**
      * Trigger the upload worker to upload the data to the specified services.
      */
-    private void startUploadWorker(boolean uploadToOpenCellId, boolean anonymouslyToOpencelliD, boolean uploadToBeaconDB, boolean retry)
-    {
-        final Context context = getContext();
-        if (context == null) return;
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        final SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_TO_OPENCELLID, uploadToOpenCellId);
-        edit.putBoolean(NetworkSurveyConstants.PROPERTY_ANONYMOUS_OPENCELLID_UPLOAD, anonymouslyToOpencelliD);
-        edit.putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_TO_BEACONDB, uploadToBeaconDB);
-        edit.putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_RETRY_ENABLED, retry);
-        edit.apply();
-
-        if (!NsUtils.isNetworkAvailable(context))
-        {
-            new android.app.AlertDialog.Builder(context).setTitle(R.string.uploader_no_internet_title).setMessage(R.string.uploader_no_internet_message).setCancelable(true).setPositiveButton(R.string.ok, null).show();
-            return;
-        }
-
-        binding.uploadButton.setEnabled(false);
-
-        Data inputData = new Data.Builder().putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_TO_OPENCELLID, uploadToOpenCellId).putBoolean(NetworkSurveyConstants.PROPERTY_ANONYMOUS_OPENCELLID_UPLOAD, anonymouslyToOpencelliD).putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_TO_BEACONDB, uploadToBeaconDB).putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_RETRY_ENABLED, retry).build();
-
-        OneTimeWorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(NsUploaderWorker.class).addTag(NsUploaderWorker.WORKER_TAG).setInputData(inputData).setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST).build();
-        showUploadProgress(uploadWorkRequest.getId());
-
-        WorkManager.getInstance(context).enqueue(uploadWorkRequest);
-    }
+//    private void startUploadWorker(boolean uploadToOpenCellId, boolean anonymouslyToOpencelliD, boolean uploadToBeaconDB, boolean retry)
+//    {
+//        final Context context = getContext();
+//        if (context == null) return;
+//
+//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+//        final SharedPreferences.Editor edit = sharedPreferences.edit();
+//        edit.putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_TO_OPENCELLID, uploadToOpenCellId);
+//        edit.putBoolean(NetworkSurveyConstants.PROPERTY_ANONYMOUS_OPENCELLID_UPLOAD, anonymouslyToOpencelliD);
+//        edit.putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_TO_BEACONDB, uploadToBeaconDB);
+//        edit.putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_RETRY_ENABLED, retry);
+//        edit.apply();
+//
+//        if (!NsUtils.isNetworkAvailable(context))
+//        {
+//            new android.app.AlertDialog.Builder(context).setTitle(R.string.uploader_no_internet_title).setMessage(R.string.uploader_no_internet_message).setCancelable(true).setPositiveButton(R.string.ok, null).show();
+//            return;
+//        }
+//
+//        binding.uploadButton.setEnabled(false);
+//
+//        Data inputData = new Data.Builder().putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_TO_OPENCELLID, uploadToOpenCellId).putBoolean(NetworkSurveyConstants.PROPERTY_ANONYMOUS_OPENCELLID_UPLOAD, anonymouslyToOpencelliD).putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_TO_BEACONDB, uploadToBeaconDB).putBoolean(NetworkSurveyConstants.PROPERTY_UPLOAD_RETRY_ENABLED, retry).build();
+//
+//        OneTimeWorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(NsUploaderWorker.class).addTag(NsUploaderWorker.WORKER_TAG).setInputData(inputData).setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST).build();
+//        showUploadProgress(uploadWorkRequest.getId());
+//
+//        WorkManager.getInstance(context).enqueue(uploadWorkRequest);
+//    }
 
     /**
      * Resets the upload progress and results UI to the default state.
      */
-    private void resetUploadUi()
-    {
-        binding.uploadProgressGroup.setVisibility(View.GONE);
-        binding.uploadProgressStatus.setVisibility(View.GONE);
-        binding.uploadResultsGroup.setVisibility(View.GONE);
-        binding.opencellidUploadStatus.setText("");
-        binding.beacondbUploadStatus.setText("");
-        binding.ocidResultMessage.setText("");
-        binding.beacondbResultMessage.setText("");
-    }
+//    private void resetUploadUi()
+//    {
+//        binding.uploadProgressGroup.setVisibility(View.GONE);
+//        binding.uploadProgressStatus.setVisibility(View.GONE);
+//        binding.uploadResultsGroup.setVisibility(View.GONE);
+//        binding.opencellidUploadStatus.setText("");
+//        binding.beacondbUploadStatus.setText("");
+//        binding.ocidResultMessage.setText("");
+//        binding.beacondbResultMessage.setText("");
+//    }
 
-    private void showUploadProgress(UUID workId)
-    {
-        Context context = getContext();
-        if (context == null) return;
+//    private void showUploadProgress(UUID workId)
+//    {
+//        Context context = getContext();
+//        if (context == null) return;
+//
+//        binding.uploadProgressGroup.setVisibility(View.VISIBLE);
+//        binding.uploadProgressBar.setProgress(0);
+//
+//        WorkManager.getInstance(context).getWorkInfoByIdLiveData(workId).observe(getViewLifecycleOwner(), new Observer<>()
+//        {
+//            private final String innerTag = NetworkSurveyActivity.class.getSimpleName() + "." + NsUploaderWorker.class.getSimpleName();
+//
+//            @Override
+//            public void onChanged(WorkInfo workInfo)
+//            {
+//                if (workInfo == null)
+//                {
+//                    Timber.tag(innerTag).w("onChanged(): WorkInfo is null");
+//                    binding.uploadProgressGroup.setVisibility(View.GONE);
+//                    return;
+//                }
+//
+//                Data progress = workInfo.getProgress();
+//                int currentPercent = progress.getInt(NsUploaderWorker.PROGRESS, NsUploaderWorker.PROGRESS_MIN_VALUE);
+//                int maxPercent = progress.getInt(NsUploaderWorker.PROGRESS_MAX, NsUploaderWorker.PROGRESS_MAX_VALUE);
+//                String statusMessage = progress.getString(NsUploaderWorker.PROGRESS_STATUS_MESSAGE);
+//                Timber.tag(innerTag).d("onChanged(): Updating progress: current=%s max=%s", currentPercent, maxPercent);
+//                currentPercent = Math.min(currentPercent, maxPercent);
+//                binding.uploadProgressBar.setProgress(currentPercent);
+//                binding.uploadPercentage.setText(context.getString(R.string.upload_percentage, currentPercent));
+//
+//                if (!Strings.isNullOrEmpty(statusMessage) || workInfo.getState() == WorkInfo.State.ENQUEUED)
+//                {
+//                    if (workInfo.getState() == WorkInfo.State.ENQUEUED)
+//                    {
+//                        statusMessage = context.getString(R.string.uploader_enqueued);
+//                    }
+//                    binding.uploadProgressStatus.setVisibility(View.VISIBLE);
+//                    binding.uploadProgressStatus.setText(statusMessage);
+//                } else
+//                {
+//                    binding.uploadProgressStatus.setVisibility(View.GONE);
+//                }
+//
+//                if (workInfo.getState().isFinished())
+//                {
+//                    showUploaderFinished(workInfo);
+//                }
+//            }
+//        });
+//    }
 
-        binding.uploadProgressGroup.setVisibility(View.VISIBLE);
-        binding.uploadProgressBar.setProgress(0);
-
-        WorkManager.getInstance(context).getWorkInfoByIdLiveData(workId).observe(getViewLifecycleOwner(), new Observer<>()
-        {
-            private final String innerTag = NetworkSurveyActivity.class.getSimpleName() + "." + NsUploaderWorker.class.getSimpleName();
-
-            @Override
-            public void onChanged(WorkInfo workInfo)
-            {
-                if (workInfo == null)
-                {
-                    Timber.tag(innerTag).w("onChanged(): WorkInfo is null");
-                    binding.uploadProgressGroup.setVisibility(View.GONE);
-                    return;
-                }
-
-                Data progress = workInfo.getProgress();
-                int currentPercent = progress.getInt(NsUploaderWorker.PROGRESS, NsUploaderWorker.PROGRESS_MIN_VALUE);
-                int maxPercent = progress.getInt(NsUploaderWorker.PROGRESS_MAX, NsUploaderWorker.PROGRESS_MAX_VALUE);
-                String statusMessage = progress.getString(NsUploaderWorker.PROGRESS_STATUS_MESSAGE);
-                Timber.tag(innerTag).d("onChanged(): Updating progress: current=%s max=%s", currentPercent, maxPercent);
-                currentPercent = Math.min(currentPercent, maxPercent);
-                binding.uploadProgressBar.setProgress(currentPercent);
-                binding.uploadPercentage.setText(context.getString(R.string.upload_percentage, currentPercent));
-
-                if (!Strings.isNullOrEmpty(statusMessage) || workInfo.getState() == WorkInfo.State.ENQUEUED)
-                {
-                    if (workInfo.getState() == WorkInfo.State.ENQUEUED)
-                    {
-                        statusMessage = context.getString(R.string.uploader_enqueued);
-                    }
-                    binding.uploadProgressStatus.setVisibility(View.VISIBLE);
-                    binding.uploadProgressStatus.setText(statusMessage);
-                } else
-                {
-                    binding.uploadProgressStatus.setVisibility(View.GONE);
-                }
-
-                if (workInfo.getState().isFinished())
-                {
-                    showUploaderFinished(workInfo);
-                }
-            }
-        });
-    }
-
-    private void showUploaderFinished(WorkInfo workInfo)
-    {
-        queryUploadQueueCount();
-
-        binding.uploadButton.setEnabled(true);
-        binding.uploadProgressGroup.setVisibility(View.GONE);
-
-        binding.uploadResultsGroup.setVisibility(View.VISIBLE);
-
-        Context context = getContext();
-        if (context == null) return;
-
-        if (workInfo.getState() == WorkInfo.State.CANCELLED)
-        {
-            Toast.makeText(context, R.string.uploader_canceled, Toast.LENGTH_LONG).show();
-            binding.opencellidUploadStatus.setText(R.string.uploader_canceled);
-            binding.opencellidUploadStatus.setTextColor(ContextCompat.getColor(context, R.color.md_theme_error));
-
-            binding.beacondbUploadStatus.setText(R.string.uploader_canceled);
-            binding.beacondbUploadStatus.setTextColor(ContextCompat.getColor(context, R.color.md_theme_error));
-        } else
-        {
-            String ocidResult = workInfo.getOutputData().getString(NsUploaderWorker.OCID_RESULT);
-            binding.opencellidUploadStatus.setText(ocidResult);
-            binding.opencellidUploadStatus.setTextColor(ContextCompat.getColor(context, R.color.md_theme_tertiary));
-
-            String beaconDbResult = workInfo.getOutputData().getString(NsUploaderWorker.BEACONDB_RESULT);
-            binding.beacondbUploadStatus.setText(beaconDbResult);
-            binding.beacondbUploadStatus.setTextColor(ContextCompat.getColor(context, R.color.md_theme_tertiary));
-
-            String ocidResultMessage = workInfo.getOutputData().getString(NsUploaderWorker.OCID_RESULT_MESSAGE);
-            if (Strings.isNullOrEmpty(ocidResultMessage))
-            {
-                binding.ocidResultMessage.setVisibility(View.GONE);
-            } else
-            {
-                binding.ocidResultMessage.setVisibility(View.VISIBLE);
-            }
-            binding.ocidResultMessage.setText(ocidResultMessage);
-
-            String beaconDbResultMessage = workInfo.getOutputData().getString(NsUploaderWorker.BEACONDB_RESULT_MESSAGE);
-            if (Strings.isNullOrEmpty(beaconDbResultMessage))
-            {
-                binding.beacondbResultMessage.setVisibility(View.GONE);
-            } else
-            {
-                binding.beacondbResultMessage.setVisibility(View.VISIBLE);
-            }
-            binding.beacondbResultMessage.setText(beaconDbResultMessage);
-        }
-
-        WorkManager.getInstance(context).pruneWork();
-    }
+//    private void showUploaderFinished(WorkInfo workInfo)
+//    {
+//        queryUploadQueueCount();
+//
+//        binding.uploadButton.setEnabled(true);
+//        binding.uploadProgressGroup.setVisibility(View.GONE);
+//
+//        binding.uploadResultsGroup.setVisibility(View.VISIBLE);
+//
+//        Context context = getContext();
+//        if (context == null) return;
+//
+//        if (workInfo.getState() == WorkInfo.State.CANCELLED)
+//        {
+//            Toast.makeText(context, R.string.uploader_canceled, Toast.LENGTH_LONG).show();
+//            binding.opencellidUploadStatus.setText(R.string.uploader_canceled);
+//            binding.opencellidUploadStatus.setTextColor(ContextCompat.getColor(context, R.color.md_theme_error));
+//
+//            binding.beacondbUploadStatus.setText(R.string.uploader_canceled);
+//            binding.beacondbUploadStatus.setTextColor(ContextCompat.getColor(context, R.color.md_theme_error));
+//        } else
+//        {
+//            String ocidResult = workInfo.getOutputData().getString(NsUploaderWorker.OCID_RESULT);
+//            binding.opencellidUploadStatus.setText(ocidResult);
+//            binding.opencellidUploadStatus.setTextColor(ContextCompat.getColor(context, R.color.md_theme_tertiary));
+//
+//            String beaconDbResult = workInfo.getOutputData().getString(NsUploaderWorker.BEACONDB_RESULT);
+//            binding.beacondbUploadStatus.setText(beaconDbResult);
+//            binding.beacondbUploadStatus.setTextColor(ContextCompat.getColor(context, R.color.md_theme_tertiary));
+//
+//            String ocidResultMessage = workInfo.getOutputData().getString(NsUploaderWorker.OCID_RESULT_MESSAGE);
+//            if (Strings.isNullOrEmpty(ocidResultMessage))
+//            {
+//                binding.ocidResultMessage.setVisibility(View.GONE);
+//            } else
+//            {
+//                binding.ocidResultMessage.setVisibility(View.VISIBLE);
+//            }
+//            binding.ocidResultMessage.setText(ocidResultMessage);
+//
+//            String beaconDbResultMessage = workInfo.getOutputData().getString(NsUploaderWorker.BEACONDB_RESULT_MESSAGE);
+//            if (Strings.isNullOrEmpty(beaconDbResultMessage))
+//            {
+//                binding.beacondbResultMessage.setVisibility(View.GONE);
+//            } else
+//            {
+//                binding.beacondbResultMessage.setVisibility(View.VISIBLE);
+//            }
+//            binding.beacondbResultMessage.setText(beaconDbResultMessage);
+//        }
+//
+//        WorkManager.getInstance(context).pruneWork();
+//    }
 
     /**
      * @return True if the {@link Manifest.permission#ACCESS_FINE_LOCATION} permission has been granted.  False otherwise.

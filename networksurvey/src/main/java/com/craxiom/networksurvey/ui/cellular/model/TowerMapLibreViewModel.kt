@@ -130,7 +130,7 @@ class TowerMapLibreViewModel : ViewModel() {
     val selectedSimSubscriptionId = _selectedSimSubscriptionId.asStateFlow()
 
     // Map layer settings
-    private val _selectedMapTileSource = MutableStateFlow(MapTileSource.MAPTILER)
+    private val _selectedMapTileSource = MutableStateFlow(MapTileSource.OPENFREEMAP)
     val selectedMapTileSource = _selectedMapTileSource.asStateFlow()
 
     private val _showBeaconDbCoverage = MutableStateFlow(false)
@@ -196,10 +196,11 @@ class TowerMapLibreViewModel : ViewModel() {
                 if (resp.isSuccessful && resp.body() != null) {
                     _mapTilerKey.value = resp.body()!!.apiKey
                     Timber.i("MapTiler API key loaded successfully (${_mapTilerKey.value})")
-                } else {
+                }
+                else {
                     Timber.w("Failed to load MapTiler API key, falling back to OSM")
                     _mapKeyLoadError.value = true
-                    setSelectedMapTileSource(MapTileSource.OPENSTREETMAP)
+//                    setSelectedMapTileSource(MapTileSource.OPENSTREETMAP)
                 }
             } catch (t: Throwable) {
                 Timber.e(t, "Error loading MapTiler API key, falling back to OSM")

@@ -972,6 +972,7 @@ public class CellularController extends AController
         } else
         {
             surveyService.unregisterCellularSurveyRecordListener(cellularSurveyRecordLogger);
+            surveyService.unregisterCellularSurveyRecordListener(cellularRecordLogger);
             surveyService.unregisterDeviceStatusListener(phoneStateCsvLogger);
             surveyService.unregisterCellularSurveyRecordListener(nrCsvLogger);
             surveyService.unregisterCellularSurveyRecordListener(lteCsvLogger);

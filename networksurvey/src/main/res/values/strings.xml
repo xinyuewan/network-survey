@@ -150,7 +150,7 @@ MQTT 流式传输允许您将数据实时发送到远程服务器。此功能不
     <string name="stop_scanning">停止扫描</string>
     <string name="scanning_inactive">扫描未激活</string>
     <string name="scanning_active">扫描已激活</string>
-    <string name="upload_scanning_description_text">开始扫描以收集蜂窝网络和/或 Wi-Fi 调查数据，用于上传到第三方数据库。此功能独立于文件日志和 MQTT 流式传输，允许您专门为上传启动和停止数据收集。点击问号图标了解更多详情。</string>
+    <string name="upload_scanning_description_text">开始扫描以收集蜂窝网络调查数据，用于上传到第三方数据库。此功能独立于文件日志和 MQTT 流式传输，允许您专门为上传启动和停止数据收集。点击问号图标了解更多详情。</string>
     <string name="upload_queue_title">待上传记录</string>
     <string name="cellular_upload_queue_count_initial">蜂窝网络：</string>
     <string name="cellular_upload_queue_count">蜂窝网络：%1$d</string>
@@ -901,4 +901,5 @@ MQTT 流式传输允许您将数据实时发送到远程服务器。此功能不
     <string name="excluded_label">（已排除）</string>
     <string name="connected_label">（已连接）</string>
     <string name="wifi_exclusion_info">已排除的 SSID 将不会保存到文件或上传到数据库</string>
+    <string name="test_initializing">初始化测试中...</string>
 </resources>

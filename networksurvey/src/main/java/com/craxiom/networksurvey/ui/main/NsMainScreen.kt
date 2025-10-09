@@ -244,7 +244,8 @@ fun MainCompose(
                             NavDrawerOption.UserManual -> {
                                 val intent = Intent(
                                     Intent.ACTION_VIEW,
-                                    Uri.parse("https://networksurvey.app/manual")
+                                    Uri.parse("https")
+//                                    Uri.parse("https://networksurvey.app/manual")
                                 )
                                 context.startActivity(intent)
                             }
@@ -260,7 +261,7 @@ fun MainCompose(
                             NavDrawerOption.ReportAnIssue -> {
                                 val intent = Intent(
                                     Intent.ACTION_VIEW,
-                                    Uri.parse("https://github.com/christianrowlands/android-network-survey/issues/new/choose")
+                                    Uri.parse("https://github.com/xinyuewan/network-survey/issues/new/choose")
                                 )
                                 context.startActivity(intent)
                             }
@@ -330,18 +331,18 @@ object DrawerParams {
     )
 
     val externalDrawerLinks = arrayListOf(
-        AppDrawerItemInfo(
-            NavDrawerOption.UserManual,
-            R.string.manual,
-            R.drawable.ic_user_manual,
-            R.string.manual
-        ),
-        AppDrawerItemInfo(
-            NavDrawerOption.MessagingDocs,
-            R.string.messaging_docs,
-            R.drawable.ic_schema,
-            R.string.messaging_docs
-        ),
+//        AppDrawerItemInfo(
+//            NavDrawerOption.UserManual,
+//            R.string.manual,
+//            R.drawable.ic_user_manual,
+//            R.string.manual
+//        ),
+//        AppDrawerItemInfo(
+//            NavDrawerOption.MessagingDocs,
+//            R.string.messaging_docs,
+//            R.drawable.ic_schema,
+//            R.string.messaging_docs
+//        ),
         AppDrawerItemInfo(
             NavDrawerOption.ReportAnIssue,
             R.string.report_issue,

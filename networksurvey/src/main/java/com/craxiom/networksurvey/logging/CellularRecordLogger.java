@@ -1,5 +1,7 @@
 package com.craxiom.networksurvey.logging;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Looper;
 
 import com.craxiom.messaging.CdmaRecord;
@@ -40,6 +42,7 @@ import mil.nga.geopackage.db.GeoPackageDataType;
 import mil.nga.geopackage.features.columns.GeometryColumns;
 import mil.nga.geopackage.features.columns.GeometryColumnsDao;
 import mil.nga.geopackage.features.user.FeatureColumn;
+import mil.nga.geopackage.features.user.FeatureCursor;
 import mil.nga.geopackage.features.user.FeatureDao;
 import mil.nga.geopackage.features.user.FeatureRow;
 import mil.nga.geopackage.features.user.FeatureTable;
@@ -64,6 +67,8 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
     private static final int WGS84_SRS_ID = 4326;
 
     private final CellularUtils cellularUtils;
+    private int currentMaxIndexId = 0;
+    private boolean isMaxIndexInitialized = false;
 
     /**
      * 构造函数（与 CellularSurveyRecordLogger 构造逻辑对齐）
@@ -98,90 +103,101 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
      */
     private void createGpsRecordTable(GeoPackage geoPackage, SpatialReferenceSystem srs) throws SQLException {
         createTable("GPS", geoPackage, srs, true, (tableColumns, columnNumber) -> {
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "offset", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "gpsType", GeoPackageDataType.SMALLINT, false, null));
-//            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "time", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "longitude", GeoPackageDataType.DOUBLE, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "latitude", GeoPackageDataType.DOUBLE, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "altitude", GeoPackageDataType.FLOAT, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "offset", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "gpsType", GeoPackageDataType.INTEGER, false, null));
+//            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "time", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "longitude", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "latitude", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "altitude", GeoPackageDataType.REAL, false, null));
         });
+        String indexSql = "CREATE INDEX IF NOT EXISTS idx_gps_offset ON GPS (offset ASC)";
+        geoPackage.execSQL(indexSql);
     }
 
     private void createMsgRecordTable(GeoPackage geoPackage, SpatialReferenceSystem srs) throws SQLException {
         createTable("Dev0_MESSAGE", geoPackage, srs, true, (tableColumns, columnNumber) -> {
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "offset", GeoPackageDataType.INT, false, null));
-//            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "time", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "indexID", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "messageNo", GeoPackageDataType.INT, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "offset", GeoPackageDataType.INTEGER, false, null));
+//            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "time", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "indexID", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "messageNo", GeoPackageDataType.INTEGER, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "messageName", GeoPackageDataType.TEXT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "Direction", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "channelID", GeoPackageDataType.INT, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "Direction", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "channelID", GeoPackageDataType.INTEGER, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "channelName", GeoPackageDataType.TEXT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "networkType", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "msgLen", GeoPackageDataType.INT, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "networkType", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "msgLen", GeoPackageDataType.INTEGER, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "msgContent", GeoPackageDataType.TEXT, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "msgPaser", GeoPackageDataType.TEXT, false, null));
         });
+        String indexSql = "CREATE INDEX IF NOT EXISTS idx_dev0_message_offset ON Dev0_MESSAGE (offset ASC)";
+        geoPackage.execSQL(indexSql);
     }
 
     private void createNrRecordTable(GeoPackage geoPackage, SpatialReferenceSystem srs) throws SQLException {
         createTable("Dev0_NR5GIE", geoPackage, srs, true, (tableColumns, columnNumber) -> {
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "offset", GeoPackageDataType.INT, false, null));
-//            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "time", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "type", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "pci", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "earfcn", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "dl_earfcn", GeoPackageDataType.FLOAT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "ul_earfcn", GeoPackageDataType.FLOAT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "dl_bw", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "ul_bw", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "tac", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "band", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "mcc", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "mnc", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "cgi", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_index", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rsrp", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rsrq", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_tx0_rsrp", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_tx1_rsrp", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rssi", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "num_cell", GeoPackageDataType.INT, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "offset", GeoPackageDataType.INTEGER, false, null));
+//            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "time", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "type", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "pci", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "earfcn", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "dl_earfcn", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "ul_earfcn", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "dl_bw", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "ul_bw", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "tac", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "band", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "mcc", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "mnc", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "cgi", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_index", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rsrp", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rsrq", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_tx0_rsrp", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_tx1_rsrp", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rssi", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "num_cell", GeoPackageDataType.INTEGER, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "n_pci", GeoPackageDataType.TEXT, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "n_rsrp", GeoPackageDataType.TEXT, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "n_rsrq", GeoPackageDataType.TEXT, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "n_earfcn", GeoPackageDataType.TEXT, false, null));
         });
+        // 为offset列创建索引（表创建后执行）
+        String indexSql = "CREATE INDEX IF NOT EXISTS idx_dev0_nr5gie_offset ON Dev0_NR5GIE (offset ASC)";
+        geoPackage.execSQL(indexSql);
     }
 
     private void createLteRecordTable(GeoPackage geoPackage, SpatialReferenceSystem srs) throws SQLException {
         createTable("Dev0_LTEIE", geoPackage, srs, true, (tableColumns, columnNumber) -> {
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "offset", GeoPackageDataType.INT, false, null));
-//            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "time", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "type", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "pci", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "earfcn", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "dl_earfcn", GeoPackageDataType.FLOAT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "ul_earfcn", GeoPackageDataType.FLOAT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "dl_bw", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "ul_bw", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "tac", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "band", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "mcc", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "mnc", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "cgi", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_index", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rsrp", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rsrq", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_tx0_rsrp", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_tx1_rsrp", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rssi", GeoPackageDataType.INT, false, null));
-            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "num_cell", GeoPackageDataType.INT, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "offset", GeoPackageDataType.INTEGER, false, null));
+//            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "time", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "type", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "pci", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "earfcn", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "dl_earfcn", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "ul_earfcn", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "dl_bw", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "ul_bw", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "tac", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "band", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "mcc", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "mnc", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "cgi", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_index", GeoPackageDataType.INTEGER, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rsrp", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rsrq", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_tx0_rsrp", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_tx1_rsrp", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "serv_cell_rssi", GeoPackageDataType.REAL, false, null));
+            tableColumns.add(FeatureColumn.createColumn(columnNumber++, "num_cell", GeoPackageDataType.INTEGER, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "n_pci", GeoPackageDataType.TEXT, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "n_rsrp", GeoPackageDataType.TEXT, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "n_rsrq", GeoPackageDataType.TEXT, false, null));
             tableColumns.add(FeatureColumn.createColumn(columnNumber++, "n_earfcn", GeoPackageDataType.TEXT, false, null));
         });
+
+        // 为offset列创建索引（表创建后执行）
+        String indexSql = "CREATE INDEX IF NOT EXISTS idx_dev0_lteie_offset ON Dev0_LTEIE (offset ASC)";
+        geoPackage.execSQL(indexSql);
     }
 
     /**
@@ -262,11 +278,35 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
     private void writeMsgRecordToLogFile(final CellularAggregateRecord record) {
         if (!loggingEnabled) return;
 
-
         try {
             if (geoPackage != null) {
                 FeatureDao featureDao = geoPackage.getFeatureDao("Dev0_MESSAGE");
                 FeatureRow row = featureDao.newRow();
+                // 初始化最大indexID（仅首次执行）
+                if (!isMaxIndexInitialized) {
+                    // 1. 创建查询条件：只查询indexID字段
+                    String[] projection = {"indexID"};
+
+                    // 2. 按indexID降序排序，取第一条就是最大值
+                    String sortOrder = "indexID DESC";
+
+                    // 3. 执行查询（限制只返回1条结果）
+                    FeatureCursor cursor = featureDao.query(projection, null, null, sortOrder, "1");
+
+                    if (cursor.moveToFirst()) {
+                        // 4. 从结果中获取最大indexID
+                        currentMaxIndexId = cursor.getInt(cursor.getColumnIndex("indexID"));
+                    } else {
+                        // 表为空时初始化为0
+                        currentMaxIndexId = 0;
+                    }
+
+                    cursor.close(); // 关闭游标释放资源
+                    isMaxIndexInitialized = true;
+                }
+
+                // 自增indexID（从1开始，每次+1）
+                currentMaxIndexId++;
 
                 row.setValue("offset", record.offset);
                 row.setValue("time", record.timestamp);
@@ -274,7 +314,7 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
 
                 row.setValue("networkType", a);
                 row.setValue("msgPaser", "第" + record.offset + "记录");
-                row.setValue("indexID", 0); // 临时默认值，需替换为真实数据
+                row.setValue("indexID", currentMaxIndexId); // 临时默认值，需替换为真实数据
                 row.setValue("messageNo", 0);
                 row.setValue("messageName", "Unknown");
                 row.setValue("Direction", 0);
@@ -288,7 +328,7 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
                 checkIfRolloverNeeded();
             }
         } catch (Exception e) {
-            Timber.e(e, "Something went wrong when trying to write a GSM survey record");
+            Timber.e(e, "Something went wrong when trying to write a MESSAGE survey record");
         }
 
     }
@@ -308,9 +348,9 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
                 row.setValue("type", a);
                 row.setValue("pci", record.pci);
                 row.setValue("earfcn", record.channelNumber);
-                row.setValue("dl_earfcn", parseFloat(record.frequency));
+                row.setValue("dl_earfcn", parseDouble(record.frequency));
                 row.setValue("ul_earfcn", null);
-                row.setValue("dl_bw", record.bandwidth);
+                row.setValue("dl_bw", record.bandwidth != null ? Double.valueOf(record.bandwidth) : null);
                 row.setValue("ul_bw", null);
                 row.setValue("tac", record.areaCode);
                 row.setValue("band", record.band);
@@ -318,8 +358,8 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
                 row.setValue("mnc", record.mnc);
                 row.setValue("cgi", record.cellId);
                 row.setValue("serv_cell_index", record.servingIndex);
-                row.setValue("serv_cell_rsrp", record.signalOne);
-                row.setValue("serv_cell_rsrq", record.signalTwo);
+                row.setValue("serv_cell_rsrp", record.signalOne != null ? Double.valueOf(record.signalOne) : null);
+                row.setValue("serv_cell_rsrq", record.signalTwo != null ? Double.valueOf(record.signalTwo) : null);
                 row.setValue("serv_cell_tx0_rsrp", null);
                 row.setValue("serv_cell_tx1_rsrp", null);
                 row.setValue("serv_cell_rssi", null);
@@ -354,9 +394,9 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
                 row.setValue("type", a);
                 row.setValue("pci", record.pci);
                 row.setValue("earfcn", record.channelNumber);
-                row.setValue("dl_earfcn", parseFloat(record.frequency));
+                row.setValue("dl_earfcn", parseDouble(record.frequency));
                 row.setValue("ul_earfcn", null);
-                row.setValue("dl_bw", record.bandwidth);
+                row.setValue("dl_bw", record.bandwidth != null ? Double.valueOf(record.bandwidth) : null);
                 row.setValue("ul_bw", null);
                 row.setValue("tac", record.areaCode);
                 row.setValue("band", record.band);
@@ -364,8 +404,8 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
                 row.setValue("mnc", record.mnc);
                 row.setValue("cgi", record.cellId);
                 row.setValue("serv_cell_index", record.servingIndex);
-                row.setValue("serv_cell_rsrp", record.signalOne);
-                row.setValue("serv_cell_rsrq", record.signalTwo);
+                row.setValue("serv_cell_rsrp", record.signalOne != null ? Double.valueOf(record.signalOne) : null);
+                row.setValue("serv_cell_rsrq", record.signalTwo != null ? Double.valueOf(record.signalTwo) : null);
                 row.setValue("serv_cell_tx0_rsrp", null);
                 row.setValue("serv_cell_tx1_rsrp", null);
                 row.setValue("serv_cell_rssi", null);
@@ -380,7 +420,7 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
                 checkIfRolloverNeeded();
             }
         } catch (Exception e) {
-            Timber.e(e, "Something went wrong when trying to write a GSM survey record");
+            Timber.e(e, "Something went wrong when trying to write a LTE survey record");
         }
 
     }
@@ -401,7 +441,9 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
                     writeGPSRecordToLogFile(record);
                     writeMsgRecordToLogFile(record);
                     if (Objects.equals(record.servingProtocol, "LTE")) {
-                        writeLTERecordToLogFile(record);}
+                        writeLTERecordToLogFile(record);
+                        writeNr5GRecordToLogFile(record);
+                    }
                     else if (Objects.equals(record.servingProtocol, "NR")){
                         writeNr5GRecordToLogFile(record);}
 
@@ -501,11 +543,12 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
         List<String> nRsrqList = new ArrayList<>();
 
         // 主小区作为第一个元素（便于后续识别）
-        nArfcnList.add(String.valueOf(record.channelNumber));
-        nPciList.add(String.valueOf(record.pci));
-        nRsrpList.add(String.valueOf(record.signalOne));
-        nRsrqList.add(String.valueOf(record.signalTwo));
-        record.servingIndex = 0;
+        if (Objects.equals(record.servingProtocol, "NR")){
+            nArfcnList.add(String.valueOf(record.channelNumber));
+            nPciList.add(String.valueOf(record.pci));
+            nRsrpList.add(String.valueOf(record.signalOne));
+            nRsrqList.add(String.valueOf(record.signalTwo));
+            record.servingIndex = 0;}
 
         // 追加邻区数据
         for (CellularRecordWrapper neighbor : neighbors) {
@@ -647,6 +690,21 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
             return null;
         }
     }
+
+    private Double parseDouble(String value) {
+        if (value == null || value.isEmpty() || "null".equalsIgnoreCase(value)) return null;
+        try {
+            // 解析原始数值
+            double originalValue = Double.parseDouble(value);
+            // 四舍五入保留1位小数：乘以10后取整，再除以10.0
+            double roundedValue = Math.round(originalValue * 10) / 10.0;
+            return roundedValue;
+        } catch (NumberFormatException e) {
+            Timber.w(e, "无效的浮点数格式: %s", value);
+            return null;
+        }
+    }
+
 
     /**
      * 字符串转 Integer（GeoPackage 字段类型适配）

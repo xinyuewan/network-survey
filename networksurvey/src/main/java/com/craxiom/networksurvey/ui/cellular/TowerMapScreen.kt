@@ -314,11 +314,11 @@ internal fun TowerMapScreen(
                 // decide which style URL to use:
                 val styleUrl = remember(mapTilerKey, mapKeyLoadError, selectedTileSource) {
                     when {
-                        selectedTileSource == MapTileSource.OPENSTREETMAP -> {
-                            // Always use OSM if explicitly selected
-                            darkMap.value = false
-                            "https://raw.githubusercontent.com/christianrowlands/ns-map-style-uri/refs/heads/main/openstreetmap.json"
-                        }
+//                        selectedTileSource == MapTileSource.OPENSTREETMAP -> {
+//                            // Always use OSM if explicitly selected
+//                            darkMap.value = false
+//                            "https://raw.githubusercontent.com/christianrowlands/ns-map-style-uri/refs/heads/main/openstreetmap.json"
+//                        }
 
                         selectedTileSource == MapTileSource.OPENFREEMAP -> {
                             // Use OpenFreeMap if explicitly selected
@@ -691,8 +691,8 @@ internal fun TowerMapScreen(
                         MapTileSource.fromString(savedTileSource!!) == MapTileSource.MAPTILER
 
                     if ((mapKeyLoadError || mapTilerKey.isNullOrEmpty()) &&
-                        initialPreferenceWasMapTiler &&
-                        selectedTileSource == MapTileSource.OPENSTREETMAP
+                        initialPreferenceWasMapTiler
+//                        selectedTileSource == MapTileSource.OPENSTREETMAP
                     ) {
                         Toast.makeText(
                             context,
@@ -740,16 +740,16 @@ internal fun TowerMapScreen(
                         )
                     }
                     // Show error toast when switching from OSM to MapTiler with failed key
-                    if (previousSource == MapTileSource.OPENSTREETMAP &&
-                        source == MapTileSource.MAPTILER &&
-                        (mapKeyLoadError || mapTilerKey.isNullOrEmpty())
-                    ) {
-                        Toast.makeText(
-                            context,
-                            "Could not load map API key; using fallback tiles.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
+//                    if (previousSource == MapTileSource.OPENSTREETMAP &&
+//                        source == MapTileSource.MAPTILER &&
+//                        (mapKeyLoadError || mapTilerKey.isNullOrEmpty())
+//                    ) {
+//                        Toast.makeText(
+//                            context,
+//                            "Could not load map API key; using fallback tiles.",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//                    }
                 },
                 onSetShowBeaconDbCoverage = { show ->
                     viewModel.setShowBeaconDbCoverage(show)
@@ -825,7 +825,7 @@ internal fun TowerMapScreen(
                 .padding(8.dp)
         ) {
             Text(
-                text = "Missing the API Key. Please report this bug at https://github.com/christianrowlands/android-network-survey/issues/new/choose",
+                text = " ",
                 color = MaterialTheme.colorScheme.surface,
                 softWrap = true,
                 fontWeight = FontWeight.Bold,
@@ -1204,7 +1204,7 @@ fun TowerMapInfoDialog(onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text(text = "Tower Map Information")
+            Text(text = "基站地图信息")
         },
         text = {
             Box {
@@ -1212,10 +1212,8 @@ fun TowerMapInfoDialog(onDismiss: () -> Unit) {
                     SelectionContainer {
                         Text(
                             text = """
-                    The tower locations are sourced from various database, for example OpenCelliD ( https://opencellid.org ).
-                    
-                    Please note that these locations may not be accurate as they are generated from crowd-sourced data and based on survey results. The tower locations are provided for your convenience, but they should not be relied upon for precise accuracy. We recommend verifying tower locations through additional sources if accuracy is critical.
-                """.trimIndent()
+     基站位置来源于多个数据库，例如 OpenCelliD（https://opencellid.org）。
+     请注意，这些位置可能并不准确，因为它们基于众包数据和调查结果生成。塔站位置仅供您参考，但不应依赖其精确性。如果准确性至关重要，我们建议通过其他来源验证塔站位置。""".trimIndent()
                         )
                     }
                 }
@@ -1223,7 +1221,7 @@ fun TowerMapInfoDialog(onDismiss: () -> Unit) {
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("OK")
+                Text("确认")
             }
         }
     )

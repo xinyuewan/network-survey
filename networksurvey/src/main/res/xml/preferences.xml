@@ -24,21 +24,21 @@
             app:summaryOn="@string/auto_start_cellular_logging_summary_on"
             app:title="@string/auto_start_cellular_logging_title" />
 
-        <SwitchPreferenceCompat
-            app:defaultValue="false"
-            app:icon="@drawable/ic_wifi"
-            app:key="auto_start_wifi_logging"
-            app:summaryOff="@string/auto_start_wifi_logging_summary_off"
-            app:summaryOn="@string/auto_start_wifi_logging_summary_on"
-            app:title="@string/auto_start_wifi_logging_title" />
+<!--        <SwitchPreferenceCompat-->
+<!--            app:defaultValue="false"-->
+<!--            app:icon="@drawable/ic_wifi"-->
+<!--            app:key="auto_start_wifi_logging"-->
+<!--            app:summaryOff="@string/auto_start_wifi_logging_summary_off"-->
+<!--            app:summaryOn="@string/auto_start_wifi_logging_summary_on"-->
+<!--            app:title="@string/auto_start_wifi_logging_title" />-->
 
-        <SwitchPreferenceCompat
-            app:defaultValue="false"
-            app:icon="@drawable/ic_bluetooth"
-            app:key="auto_start_bluetooth_logging"
-            app:summaryOff="@string/auto_start_bluetooth_logging_summary_off"
-            app:summaryOn="@string/auto_start_bluetooth_logging_summary_on"
-            app:title="@string/auto_start_bluetooth_logging_title" />
+<!--        <SwitchPreferenceCompat-->
+<!--            app:defaultValue="false"-->
+<!--            app:icon="@drawable/ic_bluetooth"-->
+<!--            app:key="auto_start_bluetooth_logging"-->
+<!--            app:summaryOff="@string/auto_start_bluetooth_logging_summary_off"-->
+<!--            app:summaryOn="@string/auto_start_bluetooth_logging_summary_on"-->
+<!--            app:title="@string/auto_start_bluetooth_logging_title" />-->
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
@@ -76,11 +76,11 @@
             app:useSimpleSummaryProvider="true"
             app:title="@string/log_file_title" />
 
-        <Preference
-            app:key="upload_preferences_group"
-            app:title="Upload Settings"
-            app:summary="Configure data upload options including OpenCelliD API key"
-            app:fragment="com.craxiom.networksurvey.fragments.UploadSettingsFragment" />
+<!--        <Preference-->
+<!--            app:key="upload_preferences_group"-->
+<!--            app:title="上传设置"-->
+<!--            app:summary="配置数据上传选项，包括 OpenCelliD API 密钥"-->
+<!--            app:fragment="com.craxiom.networksurvey.fragments.UploadSettingsFragment" />-->
 
     </PreferenceCategory>
 
@@ -96,19 +96,19 @@
             app:title="@string/cellular_scan_interval_title"
             app:useSimpleSummaryProvider="true" />
 
-        <EditTextPreference
-            app:defaultValue="10"
-            app:dialogMessage="@string/wifi_scan_interval_description"
-            app:key="wifi_scan_interval_seconds"
-            app:title="@string/wifi_scan_interval_title"
-            app:useSimpleSummaryProvider="true" />
+<!--        <EditTextPreference-->
+<!--            app:defaultValue="10"-->
+<!--            app:dialogMessage="@string/wifi_scan_interval_description"-->
+<!--            app:key="wifi_scan_interval_seconds"-->
+<!--            app:title="@string/wifi_scan_interval_title"-->
+<!--            app:useSimpleSummaryProvider="true" />-->
 
-        <EditTextPreference
-            app:defaultValue="30"
-            app:dialogMessage="@string/bluetooth_scan_interval_description"
-            app:key="bluetooth_scan_interval_seconds"
-            app:title="@string/bluetooth_scan_interval_title"
-            app:useSimpleSummaryProvider="true" />
+<!--        <EditTextPreference-->
+<!--            app:defaultValue="30"-->
+<!--            app:dialogMessage="@string/bluetooth_scan_interval_description"-->
+<!--            app:key="bluetooth_scan_interval_seconds"-->
+<!--            app:title="@string/bluetooth_scan_interval_title"-->
+<!--            app:useSimpleSummaryProvider="true" />-->
 
         <EditTextPreference
             app:defaultValue="30"
@@ -179,8 +179,8 @@
 
         <Preference
             app:key="tower_map_preferences_group"
-            app:title="Tower Map Settings"
-            app:summary="Configure tower map options"
+            app:title="基站地图设置"
+            app:summary="配置基站地图选项"
             app:fragment="com.craxiom.networksurvey.fragments.TowerMapSettingsFragment" />
 
     </PreferenceCategory>
@@ -216,17 +216,17 @@
 
     </PreferenceCategory>-->
 
-    <PreferenceCategory
-        app:icon="@drawable/ic_wifi"
-        app:key="wifi_settings"
-        app:title="Wi-Fi Settings">
+<!--    <PreferenceCategory-->
+<!--        app:icon="@drawable/ic_wifi"-->
+<!--        app:key="wifi_settings"-->
+<!--        app:title="Wi-Fi Settings">-->
 
-        <Preference
-            app:key="ssid_exclusion_list"
-            app:title="@string/ssid_exclusion_list_title"
-            app:summary="@string/ssid_exclusion_list_description" />
+<!--        <Preference-->
+<!--            app:key="ssid_exclusion_list"-->
+<!--            app:title="@string/ssid_exclusion_list_title"-->
+<!--            app:summary="@string/ssid_exclusion_list_description" />-->
 
-    </PreferenceCategory>
+<!--    </PreferenceCategory>-->
 
     <PreferenceCategory
         app:icon="@android:drawable/ic_lock_idle_low_battery"
@@ -249,11 +249,11 @@
     <PreferenceCategory
         app:icon="@drawable/ic_info"
         app:key="about"
-        app:title="About">
+        app:title="关于">
 
         <Preference
             app:key="app_version"
-            app:title="Version"
+            app:title="版本"
             app:defaultValue="None" />
 
         <Preference

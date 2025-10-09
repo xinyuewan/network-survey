@@ -36,7 +36,7 @@ class SpeedTestFragment : Fragment() {
             speedTestService = binder.getService()
             isServiceBound = true
 
-            // ✅ 恢复上次测试结果
+            // 恢复上次测试结果
             speedTestService?.let { svc ->
                 svc.lastLatency.value?.let { binding.latencyText.text = "$it ms" }
                 svc.lastDownload.value?.let {
@@ -145,6 +145,10 @@ class SpeedTestFragment : Fragment() {
                 updateTestButtonState()
                 showToast(event.message)
             }
+            // 添加对Initializing事件的处理
+            is SpeedTestEvent.Initializing -> {
+                binding.statusText.text = getString(R.string.test_initializing)
+            }
         }
     }
 
@@ -176,6 +180,6 @@ class SpeedTestFragment : Fragment() {
             requireContext().unbindService(serviceConnection)
             isServiceBound = false
         }
-        // ❌ 不 stopService，保持测速不中断
+        // 不 stopService，保持测速不中断
     }
 }

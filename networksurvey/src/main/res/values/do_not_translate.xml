@@ -18,7 +18,7 @@
 -->
 <resources>
     <!-- Strings in this file should NOT be translated -->
-    <string name="app_name">Network Survey</string>
+    <string name="app_name">ShunscomTest</string>
 
     <!-- Values and units display - Status -->
     <string name="lat_or_lon">%1$.7f\u00B0</string>

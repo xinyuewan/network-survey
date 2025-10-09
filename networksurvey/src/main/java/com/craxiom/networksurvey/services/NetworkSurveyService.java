@@ -8,6 +8,8 @@ import static com.craxiom.networksurvey.constants.NetworkSurveyConstants.LOCATIO
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -260,6 +262,9 @@ public class NetworkSurveyService extends Service implements IConnectionStateLis
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
+        // 启动前台服务（放在方法开头，确保任何启动路径都执行）
+        Notification notification = createForegroundNotification(); // 复用之前定义的通知创建方法
+        startForeground(1, notification); // 通知ID需固定
         // If we are started at boot, then that means the NetworkSurveyActivity was never run.  Therefore, to ensure we
         // read and respect the auto start logging user preferences, we need to read them and start logging here.
         final boolean startedAtBoot = intent.getBooleanExtra(NetworkSurveyConstants.EXTRA_STARTED_AT_BOOT, false);
@@ -376,6 +381,22 @@ public class NetworkSurveyService extends Service implements IConnectionStateLis
         }
 
         return START_REDELIVER_INTENT;
+    }
+
+    private Notification createForegroundNotification() {
+        NotificationChannel channel = new NotificationChannel(
+                "network_survey_channel",
+                "Network Survey Service",
+                NotificationManager.IMPORTANCE_LOW
+        );
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        manager.createNotificationChannel(channel);
+
+        return new NotificationCompat.Builder(this, "network_survey_channel")
+                .setContentTitle("Network Survey Running")
+                .setContentText("Cellular logging active")
+                .setSmallIcon(R.drawable.logging_thick_icon)
+                .build();
     }
 
     @Override

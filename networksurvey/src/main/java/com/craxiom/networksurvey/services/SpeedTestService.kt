@@ -61,7 +61,7 @@ class SpeedTestService : Service() {
 
     private suspend fun emitEvent(event: SpeedTestEvent) {
         _events.emit(event)
-        when(event){
+        when (event) {
             is SpeedTestEvent.Latency -> _lastLatency.value = event.pingMs
             is SpeedTestEvent.Download -> _lastDownload.value = event.speedMbps
             is SpeedTestEvent.Upload -> _lastUpload.value = event.speedMbps
@@ -78,19 +78,38 @@ class SpeedTestService : Service() {
 
         serviceScope.launch {
             try {
-                emitEvent(SpeedTestEvent.Latency(0)) // 重置显示
-                emitEvent(SpeedTestEvent.Download(0.0)) // 重置显示
+                // 重置 UI
+                emitEvent(SpeedTestEvent.Latency(0))
+                emitEvent(SpeedTestEvent.Download(0.0))
                 emitEvent(SpeedTestEvent.Upload(0.0))
 
+                // 第一步：获取中国服务器列表
+                val servers = networkSpeedTester.getSpeedtestCNServers()
+                if (servers.isEmpty()) {
+                    emitEvent(SpeedTestEvent.Error("未找到可用测速服务器"))
+                    return@launch
+                }
+
+                // 第二步：选择最优服务器
+                val best = networkSpeedTester.selectBestServer(servers)
+                if (best == null) {
+                    emitEvent(SpeedTestEvent.Error("无法选择测速服务器"))
+                    return@launch
+                }
+
+                // 第三步：测试时延
                 val latency = networkSpeedTester.testLatency()
                 emitEvent(SpeedTestEvent.Latency(latency))
 
+                // 第四步：测试下载
                 val downloadSpeed = networkSpeedTester.testDownloadSpeed()
                 emitEvent(SpeedTestEvent.Download(downloadSpeed))
 
+                // 第五步：测试上传
                 val uploadSpeed = networkSpeedTester.testUploadSpeed()
                 emitEvent(SpeedTestEvent.Upload(uploadSpeed))
 
+                // 存储结果
                 val record = SpeedTestResult(
                     id = UUID.randomUUID().toString(),
                     timestamp = System.currentTimeMillis(),
@@ -161,3 +180,4 @@ class SpeedTestService : Service() {
         const val NOTIFICATION_ID = 1001
     }
 }
+
