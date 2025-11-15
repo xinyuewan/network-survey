@@ -357,7 +357,7 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
                 row.setValue("mcc", record.mcc);
                 row.setValue("mnc", record.mnc);
                 row.setValue("cgi", record.cellId);
-                row.setValue("serv_cell_index", record.servingIndex);
+                row.setValue("serv_cell_index", record.servingIndex!= null?record.servingIndex:-1);
                 row.setValue("serv_cell_rsrp", record.signalOne != null ? Double.valueOf(record.signalOne) : null);
                 row.setValue("serv_cell_rsrq", record.signalTwo != null ? Double.valueOf(record.signalTwo) : null);
                 row.setValue("serv_cell_tx0_rsrp", null);
@@ -403,7 +403,7 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
                 row.setValue("mcc", record.mcc);
                 row.setValue("mnc", record.mnc);
                 row.setValue("cgi", record.cellId);
-                row.setValue("serv_cell_index", record.servingIndex);
+                row.setValue("serv_cell_index", record.servingIndex!= null?record.servingIndex:-1);
                 row.setValue("serv_cell_rsrp", record.signalOne != null ? Double.valueOf(record.signalOne) : null);
                 row.setValue("serv_cell_rsrq", record.signalTwo != null ? Double.valueOf(record.signalTwo) : null);
                 row.setValue("serv_cell_tx0_rsrp", null);
@@ -442,7 +442,7 @@ public class CellularRecordLogger extends SurveyRecordLogger implements ICellula
                     writeMsgRecordToLogFile(record);
                     if (Objects.equals(record.servingProtocol, "LTE")) {
                         writeLTERecordToLogFile(record);
-                        writeNr5GRecordToLogFile(record);
+//                        writeNr5GRecordToLogFile(record);
                     }
                     else if (Objects.equals(record.servingProtocol, "NR")){
                         writeNr5GRecordToLogFile(record);}

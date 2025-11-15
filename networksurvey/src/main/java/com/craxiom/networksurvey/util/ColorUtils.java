@@ -165,4 +165,18 @@ public class ColorUtils
         // Maintain the original RGB values
         return Color.argb(fadedAlpha, Color.red(color), Color.green(color), Color.blue(color));
     }
+
+    public static int getColorForRsrp(float rsrp) {
+        if (rsrp >= -80) {
+            return 0xFF009d00; // 优（绿色）
+        } else if (rsrp >= -90) {
+            return 0xFFFFB300; // 良（黄色）
+        } else if (rsrp >= -100) {
+            return 0xFFFF9800; // 中（橙色）
+        } else if (rsrp >= -110) {
+            return 0xFFD50000; // 差（红色）
+        } else {
+            return 0xFF888888; // 极弱（灰色）
+        }
+    }
 }

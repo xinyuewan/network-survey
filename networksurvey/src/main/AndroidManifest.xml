@@ -26,6 +26,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> <!-- For battery optimization prompt -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
 
     <uses-feature
         android:name="android.hardware.location.gps"
@@ -82,12 +83,13 @@
                 <data android:path="/grpc_server_connection" />
             </intent-filter>
         </activity>
-
+        <!-- ✅ 前台保活服务 -->
         <service
             android:name=".services.NetworkSurveyService"
             android:description="@string/network_survey_service_description"
+            android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="location">
+            android:foregroundServiceType="location|dataSync|connectedDevice">
             <intent-filter>
                 <action android:name="com.craxiom.networksurvey.START_SURVEY" />
                 <action android:name="com.craxiom.networksurvey.STOP_SURVEY" />
